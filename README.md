@@ -8,7 +8,7 @@ N8N Community Node for the [Deep-OCR Service](https://deep-ocr.com) - Extract st
 ## 🚀 Features
 
 - **Structured Data Extraction**: Receive a structured JSON object with the fields relevant to the document type
-- **7 Document Types**: Invoice, Receipt, Contract, Delivery Note, ID Document, Handwriting, Generic
+- **10 Document Types**: Invoice, Receipt, Contract, Delivery Note, Bank Statement, Payslip, Purchase Order, ID Document, Handwriting, Generic — plus automatic type detection
 - **Multiple Format Support**: PDF, PNG, JPG, JPEG, WebP (up to 10MB)
 - **Secure Authentication**: API key stored securely using n8n credentials
 
@@ -49,13 +49,17 @@ npm install n8n-nodes-deep-ocr
 
 | Type | Description |
 |---|---|
-| `invoice` | Vendor, line items, totals, payment terms |
-| `receipt` | Merchant, items purchased, totals, payment method |
-| `contract` | Parties, dates, key clauses |
-| `delivery_note` | Sender, recipient, items, quantities |
-| `id_document` | Name, date of birth, document number, expiry |
-| `handwriting` | Transcription of handwritten text |
-| `generic` | General extraction for any document type |
+| `auto` | Let the API detect the document type automatically |
+| `invoice` | Vendor, customer, line items, tax breakdown, totals, IBAN, payment terms |
+| `receipt` | Merchant, items, per-item tax rate, tax breakdown, totals, payment method |
+| `contract` | Parties (role/name/address), dates, obligations, governing law, signatures |
+| `delivery_note` | Sender, recipient, items (ordered vs. delivered), tracking, partial delivery info |
+| `bank_statement` | Account holder, IBAN/BIC, opening/closing balance, full transaction list |
+| `payslip` | Employer, employee (incl. IBAN), earnings, deductions, gross/net salary |
+| `purchase_order` | Buyer, supplier, delivery address, line items, totals |
+| `id_document` | Type, document number, personal data, MRZ lines |
+| `handwriting` | Full transcription with unclear-word markers, confidence rating, language |
+| `generic` | Flexible extraction for any document — adapts structure to the content |
 
 ## 📋 Example Workflow
 
