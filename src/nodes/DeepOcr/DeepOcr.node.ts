@@ -83,7 +83,7 @@ export class DeepOcr implements INodeType {
         type: 'options',
         options: [
           {
-            name: 'Auto-detect',
+            name: 'Auto-Detect',
             value: 'auto',
             description: 'Let the API classify the document automatically (one extra API call)',
           },
