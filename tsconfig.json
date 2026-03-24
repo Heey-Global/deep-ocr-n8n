@@ -14,10 +14,6 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
