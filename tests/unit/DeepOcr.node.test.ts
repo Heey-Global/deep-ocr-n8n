@@ -67,10 +67,11 @@ describe('DeepOcr Node', () => {
       expect(prop?.default).toBe('invoice');
     });
 
-    it('should have all 7 document type options', () => {
+    it('should have all 11 document type options including auto-detect', () => {
       const prop = node.description.properties.find((p) => p.name === 'documentType');
       const options = prop?.options as Array<{ value: string }>;
       const values = options?.map((o) => o.value);
+      expect(values).toContain('auto');
       expect(values).toContain('invoice');
       expect(values).toContain('receipt');
       expect(values).toContain('contract');
@@ -78,6 +79,10 @@ describe('DeepOcr Node', () => {
       expect(values).toContain('delivery_note');
       expect(values).toContain('handwriting');
       expect(values).toContain('generic');
+      expect(values).toContain('bank_statement');
+      expect(values).toContain('payslip');
+      expect(values).toContain('purchase_order');
+      expect(options).toHaveLength(11);
     });
   });
 
@@ -116,6 +121,37 @@ describe('DeepOcr Node', () => {
       expect(result[0][0].json.total).toBe(119.0);
       expect(result[0][0].json.document_type).toBe('invoice');
       expect(result[0][0].json.filename).toBe('invoice.pdf');
+    });
+
+    it('should omit document_type query param when type is auto', async () => {
+      const inputItems: INodeExecutionData[] = [{ json: {} }];
+      const binaryBuffer = Buffer.from('test pdf content');
+
+      (mockExecuteFunctions.getInputData as jest.Mock).mockReturnValue(inputItems);
+      (mockExecuteFunctions.getNodeParameter as jest.Mock)
+        .mockReturnValueOnce('data')
+        .mockReturnValueOnce('auto');
+      (mockExecuteFunctions.helpers.assertBinaryData as jest.Mock).mockReturnValue({
+        mimeType: 'application/pdf',
+        fileName: 'document.pdf',
+      });
+      (mockExecuteFunctions.helpers.getBinaryDataBuffer as jest.Mock).mockResolvedValue(binaryBuffer);
+      (mockExecuteFunctions.helpers.requestWithAuthentication as jest.Mock).mockResolvedValue({
+        success: true,
+        filename: 'document.pdf',
+        document_type: 'invoice',
+        content: {},
+        metadata: {},
+      });
+
+      await node.execute.call(mockExecuteFunctions);
+
+      expect(mockExecuteFunctions.helpers.requestWithAuthentication).toHaveBeenCalledWith(
+        'deepOcrApi',
+        expect.objectContaining({
+          qs: {},
+        }),
+      );
     });
 
     it('should send document_type as query param to /v1/ocr', async () => {

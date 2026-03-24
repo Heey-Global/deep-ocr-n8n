@@ -78,7 +78,6 @@ jobs:
       - name: Publish to npm
         # Trusted Publishing via OIDC — no NPM_TOKEN needed (id-token: write grants OIDC access)
         # --provenance required by n8n from 2026-05-01
+        # Note: @n8n/scan-community-package intentionally removed from this workflow — repeated
+        # invocation issues documented in PRs #47–#51.
         run: pnpm publish --no-git-checks --access public --provenance
-
-      - name: Scan with n8n community package linter
-        run: npx @n8n/scan-community-package n8n-nodes-deep-ocr@${{ needs.semantic-release.outputs.new_release_version }}

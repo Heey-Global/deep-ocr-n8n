@@ -15,12 +15,16 @@ import {
 } from '../../utils/errors';
 
 const ALLOWED_DOCUMENT_TYPES = [
+  'auto',
+  'bank_statement',
   'contract',
   'delivery_note',
   'generic',
   'handwriting',
   'id_document',
   'invoice',
+  'payslip',
+  'purchase_order',
   'receipt',
 ] as const;
 
@@ -79,6 +83,16 @@ export class DeepOcr implements INodeType {
         type: 'options',
         options: [
           {
+            name: 'Auto-Detect',
+            value: 'auto',
+            description: 'Let the API classify the document automatically (one extra API call)',
+          },
+          {
+            name: 'Bank Statement',
+            value: 'bank_statement',
+            description: 'Extract account info, balances, and transaction list from bank statements',
+          },
+          {
             name: 'Contract',
             value: 'contract',
             description: 'Extract parties, terms, and obligations from contracts',
@@ -86,32 +100,42 @@ export class DeepOcr implements INodeType {
           {
             name: 'Delivery Note',
             value: 'delivery_note',
-            description: 'Extract items, quantities, and delivery info from delivery notes',
+            description: 'Extract sender, recipient, items, quantities, and tracking info',
           },
           {
             name: 'Generic',
             value: 'generic',
-            description: 'Extract all detectable content from any document',
+            description: 'Flexible extraction for any document — use when no specific type fits',
           },
           {
             name: 'Handwriting',
             value: 'handwriting',
-            description: 'Transcribe handwritten text',
+            description: 'Transcribe handwritten text with confidence rating',
           },
           {
             name: 'ID Document',
             value: 'id_document',
-            description: 'Extract personal data from passports and ID cards',
+            description: 'Extract personal data from passports, ID cards, and driving licences',
           },
           {
             name: 'Invoice',
             value: 'invoice',
-            description: 'Extract vendor, line items, totals, and payment terms from invoices',
+            description: 'Extract vendor, line items, tax breakdown, totals, and payment terms',
+          },
+          {
+            name: 'Payslip',
+            value: 'payslip',
+            description: 'Extract employer, employee, earnings, deductions, and net salary',
+          },
+          {
+            name: 'Purchase Order',
+            value: 'purchase_order',
+            description: 'Extract buyer, supplier, ordered items, and totals from purchase orders',
           },
           {
             name: 'Receipt',
             value: 'receipt',
-            description: 'Extract merchant, items, and totals from receipts',
+            description: 'Extract merchant, items, tax breakdown, totals, and payment method',
           },
         ],
         default: 'invoice',
@@ -169,7 +193,9 @@ export class DeepOcr implements INodeType {
             .replace(/[<>:"|?*\x00-\x1f]/g, '')
             .substring(0, 255) || 'document';
 
-        // Make API request — document_type as query param, file as multipart
+        // Make API request — document_type as query param, file as multipart.
+        // When documentType is 'auto', omit the parameter entirely so the API
+        // classifies the document automatically.
         // requestWithAuthentication (request-library) is used because httpRequestWithAuthentication
         // (IHttpRequestOptions) does not support the formData property for multipart uploads.
         // eslint-disable-next-line @n8n/community-nodes/no-deprecated-workflow-functions -- httpRequestWithAuthentication (IHttpRequestOptions) does not support formData for multipart uploads
@@ -179,7 +205,7 @@ export class DeepOcr implements INodeType {
           {
             method: 'POST',
             url: 'https://api.deep-ocr.com/v1/ocr',
-            qs: { document_type: documentType },
+            qs: documentType !== 'auto' ? { document_type: documentType } : {},
             formData: {
               file: {
                 value: buffer,
@@ -216,7 +242,9 @@ export class DeepOcr implements INodeType {
         });
       } catch (error: unknown) {
         if (this.continueOnFail()) {
-          const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+          const raw = error instanceof Error ? error.message : 'Unknown error occurred';
+          // Truncate to prevent verbose API errors from leaking document content into workflow logs
+          const errorMessage = raw.length > 200 ? raw.substring(0, 200) + '…' : raw;
           returnData.push({
             json: { error: errorMessage },
             pairedItem: { item: itemIndex },

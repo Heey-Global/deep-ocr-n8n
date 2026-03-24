@@ -44,7 +44,7 @@ describe('DeepOcrApi Credentials', () => {
 
     it('should set Bearer token in Authorization header', () => {
       const authProps = credentials.authenticate.properties;
-      expect(authProps?.headers?.Authorization).toBe('=Bearer {{$credentials.apiKey}}');
+      expect(authProps?.headers?.Authorization).toBe('={{"Bearer " + $credentials.apiKey}}');
     });
   });
 
