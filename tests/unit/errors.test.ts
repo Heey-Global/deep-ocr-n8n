@@ -148,9 +148,9 @@ describe('Error Utilities', () => {
     });
 
     it('should apply NFKD normalization', () => {
-      // Both forms should produce a consistent result
-      const result = sanitizeFilename('\uFB01le.pdf'); // ﬁ ligature → fi after NFKD
-      expect(result).toBeTruthy();
+      // ﬁ ligature (U+FB01) decomposes to "fi" after NFKD normalization
+      const result = sanitizeFilename('\uFB01le.pdf');
+      expect(result).toBe('file.pdf');
     });
   });
 
@@ -163,14 +163,14 @@ describe('Error Utilities', () => {
     it('should truncate messages longer than 200 characters', () => {
       const msg = 'a'.repeat(300);
       const result = truncateErrorMessage(msg);
-      expect(result.length).toBeLessThanOrEqual(201); // 200 + ellipsis char
+      expect(result.length).toBeLessThanOrEqual(200);
       expect(result.endsWith('…')).toBe(true);
     });
 
     it('should respect custom maxLength', () => {
       const msg = 'a'.repeat(100);
       const result = truncateErrorMessage(msg, 50);
-      expect(result.length).toBeLessThanOrEqual(51);
+      expect(result.length).toBeLessThanOrEqual(50);
       expect(result.endsWith('…')).toBe(true);
     });
   });

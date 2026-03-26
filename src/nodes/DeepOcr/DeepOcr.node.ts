@@ -178,10 +178,15 @@ export class DeepOcr implements INodeType {
         }
 
         // Early size check from metadata before loading the full buffer into memory (DoS prevention).
-        // || 0 converts NaN to 0 (handles non-numeric fileSize strings) so the check is safely skipped
-        // and the authoritative buffer-length check below still runs.
-        const metaSize = parseInt(binaryData.fileSize ?? '0', 10) || 0;
-        if (metaSize > 0 && !isValidFileSize(metaSize)) {
+        // Only accepts strict digit strings — parseInt would partially parse "123abc" → 123 or "1e9" → 1,
+        // which could let oversized files bypass this guard. Non-matching values fall through to the
+        // authoritative buffer-length check below.
+        const rawFileSize = binaryData.fileSize;
+        const metaSize =
+          typeof rawFileSize === 'string' && /^[0-9]+$/.test(rawFileSize)
+            ? Number(rawFileSize)
+            : 0;
+        if (metaSize > 0 && Number.isFinite(metaSize) && !isValidFileSize(metaSize)) {
           throw createFileSizeError(this.getNode(), metaSize, itemIndex);
         }
 

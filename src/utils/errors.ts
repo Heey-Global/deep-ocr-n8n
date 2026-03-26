@@ -7,7 +7,7 @@ import type { INode } from 'n8n-workflow';
 export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 /**
- * Maximum safe filename length in bytes (POSIX limit)
+ * Maximum safe filename length in characters (enforced on UTF-16 code units, not bytes)
  */
 export const MAX_FILENAME_LENGTH = 255;
 
@@ -100,7 +100,10 @@ export function sanitizeFilename(filename: string): string {
  * document content into workflow logs.
  */
 export function truncateErrorMessage(message: string, maxLength = 200): string {
-  return message.length > maxLength ? message.substring(0, maxLength) + '…' : message;
+  if (message.length > maxLength) {
+    return message.substring(0, Math.max(0, maxLength - 1)) + '…';
+  }
+  return message;
 }
 
 /**
