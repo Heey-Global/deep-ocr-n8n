@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-deep-ocr",
-  "version": "1.4.3",
+  "version": "1.5.0",
   "description": "n8n community node for Deep-OCR document processing API",
   "keywords": [
     "n8n-community-node-package",
@@ -78,7 +78,7 @@
     "overrides": {
       "form-data": ">=4.0.4",
       "fast-xml-parser": ">=4.5.4",
-            "braces": ">=3.0.3",
+      "braces": ">=3.0.3",
       "micromatch": ">=4.0.8",
       "axios": ">=1.13.6",
       "ajv": ">=6.14.0 <9.0.0",
