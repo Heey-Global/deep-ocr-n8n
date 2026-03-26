@@ -12,7 +12,13 @@ import {
   isValidFileSize,
   createFileTypeError,
   createFileSizeError,
+  sanitizeFilename,
+  truncateErrorMessage,
+  wrapUnknownError,
 } from '../../utils/errors';
+
+/** Deep-OCR API endpoint */
+const API_ENDPOINT = 'https://api.deep-ocr.com/v1/ocr';
 
 const ALLOWED_DOCUMENT_TYPES = [
   'auto',
@@ -76,6 +82,7 @@ export class DeepOcr implements INodeType {
         default: 'data',
         required: true,
         description: 'Name of the binary property containing the document to process',
+        placeholder: "e.g. 'data', 'file', 'document'",
       },
       {
         displayName: 'Document Type',
@@ -165,13 +172,15 @@ export class DeepOcr implements INodeType {
         // Get binary data
         const binaryData = this.helpers.assertBinaryData(itemIndex, binaryPropertyName);
 
-        // Validate MIME type — reject undefined/empty to prevent silent bypass
+        // Validate MIME type — case-insensitive; reject undefined/empty to prevent silent bypass
         if (!isValidMimeType(binaryData.mimeType)) {
           throw createFileTypeError(this.getNode(), binaryData.mimeType ?? 'unknown', itemIndex);
         }
 
-        // Early size check from metadata before loading the full buffer into memory (DoS prevention)
-        const metaSize = parseInt(binaryData.fileSize ?? '0', 10);
+        // Early size check from metadata before loading the full buffer into memory (DoS prevention).
+        // || 0 converts NaN to 0 (handles non-numeric fileSize strings) so the check is safely skipped
+        // and the authoritative buffer-length check below still runs.
+        const metaSize = parseInt(binaryData.fileSize ?? '0', 10) || 0;
         if (metaSize > 0 && !isValidFileSize(metaSize)) {
           throw createFileSizeError(this.getNode(), metaSize, itemIndex);
         }
@@ -184,14 +193,8 @@ export class DeepOcr implements INodeType {
           throw createFileSizeError(this.getNode(), buffer.length, itemIndex);
         }
 
-        // Sanitize filename to prevent path traversal sequences in multipart headers
-        const rawFilename = binaryData.fileName ?? 'document';
-        const safeFilename =
-          rawFilename
-            .replace(/\.\./g, '')
-            .replace(/[/\\]/g, '_')
-            .replace(/[<>:"|?*\x00-\x1f]/g, '')
-            .substring(0, 255) || 'document';
+        // Sanitize filename to prevent path traversal and homograph attacks in multipart headers
+        const safeFilename = sanitizeFilename(binaryData.fileName ?? 'document');
 
         // Make API request — document_type as query param, file as multipart.
         // When documentType is 'auto', omit the parameter entirely so the API
@@ -199,12 +202,14 @@ export class DeepOcr implements INodeType {
         const form = new FormData();
         form.append('file', new Blob([buffer], { type: binaryData.mimeType }), safeFilename);
 
+        // n8n's httpRequestWithAuthentication accepts FormData at runtime even though
+        // the TypeScript type expects IDataObject — the double-cast is intentional.
         const rawResponse: unknown = await this.helpers.httpRequestWithAuthentication.call(
           this,
           'deepOcrApi',
           {
             method: 'POST',
-            url: 'https://api.deep-ocr.com/v1/ocr',
+            url: API_ENDPOINT,
             qs: documentType !== 'auto' ? { document_type: documentType } : {},
             body: form as unknown as IDataObject,
           },
@@ -234,10 +239,8 @@ export class DeepOcr implements INodeType {
       } catch (error: unknown) {
         if (this.continueOnFail()) {
           const raw = error instanceof Error ? error.message : 'Unknown error occurred';
-          // Truncate to prevent verbose API errors from leaking document content into workflow logs
-          const errorMessage = raw.length > 200 ? raw.substring(0, 200) + '…' : raw;
           returnData.push({
-            json: { error: errorMessage },
+            json: { error: truncateErrorMessage(raw) },
             pairedItem: { item: itemIndex },
           });
           continue;
@@ -245,13 +248,7 @@ export class DeepOcr implements INodeType {
         if (error instanceof NodeApiError || error instanceof NodeOperationError) {
           throw error;
         }
-        const errorObject: JsonObject = {
-          message: error instanceof Error ? error.message : 'Unknown error',
-        };
-        throw new NodeApiError(this.getNode(), errorObject, {
-          message: 'Failed to process document with Deep-OCR API',
-          itemIndex,
-        });
+        throw wrapUnknownError(this.getNode(), error, itemIndex);
       }
     }
 

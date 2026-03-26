@@ -3,10 +3,12 @@ import {
   isValidFileSize,
   createFileTypeError,
   createFileSizeError,
-  createApiError,
+  sanitizeFilename,
+  truncateErrorMessage,
+  wrapUnknownError,
   MAX_FILE_SIZE,
+  MAX_FILENAME_LENGTH,
   ALLOWED_MIME_TYPES,
-  DeepOcrErrorCode,
 } from '../../src/utils/errors';
 import type { INode } from 'n8n-workflow';
 
@@ -26,20 +28,16 @@ describe('Error Utilities', () => {
       expect(MAX_FILE_SIZE).toBe(10 * 1024 * 1024);
     });
 
+    it('should have MAX_FILENAME_LENGTH as 255', () => {
+      expect(MAX_FILENAME_LENGTH).toBe(255);
+    });
+
     it('should have correct allowed MIME types', () => {
       expect(ALLOWED_MIME_TYPES).toContain('application/pdf');
       expect(ALLOWED_MIME_TYPES).toContain('image/png');
       expect(ALLOWED_MIME_TYPES).toContain('image/jpeg');
       expect(ALLOWED_MIME_TYPES).toContain('image/jpg');
       expect(ALLOWED_MIME_TYPES).toContain('image/webp');
-    });
-
-    it('should have correct error codes', () => {
-      expect(DeepOcrErrorCode.INVALID_FILE_TYPE).toBe('INVALID_FILE_TYPE');
-      expect(DeepOcrErrorCode.FILE_TOO_LARGE).toBe('FILE_TOO_LARGE');
-      expect(DeepOcrErrorCode.MISSING_BINARY_DATA).toBe('MISSING_BINARY_DATA');
-      expect(DeepOcrErrorCode.API_ERROR).toBe('API_ERROR');
-      expect(DeepOcrErrorCode.AUTH_ERROR).toBe('AUTH_ERROR');
     });
   });
 
@@ -64,6 +62,12 @@ describe('Error Utilities', () => {
 
     it('should return false for empty string MIME type', () => {
       expect(isValidMimeType('')).toBe(false);
+    });
+
+    it('should accept MIME types case-insensitively', () => {
+      expect(isValidMimeType('image/JPEG')).toBe(true);
+      expect(isValidMimeType('APPLICATION/PDF')).toBe(true);
+      expect(isValidMimeType('Image/PNG')).toBe(true);
     });
   });
 
@@ -116,18 +120,76 @@ describe('Error Utilities', () => {
     });
   });
 
-  describe('createApiError', () => {
-    it('should create error with correct message', () => {
-      const originalError = new Error('API timeout');
-      const error = createApiError(mockNode, originalError, 0);
-      expect(error.message).toContain('Failed to process document with Deep-OCR API');
+  describe('sanitizeFilename', () => {
+    it('should strip path traversal sequences', () => {
+      expect(sanitizeFilename('../../etc/passwd.pdf')).not.toContain('..');
+    });
+
+    it('should replace forward slashes with underscores', () => {
+      expect(sanitizeFilename('path/to/file.pdf')).not.toContain('/');
+    });
+
+    it('should replace backslashes with underscores', () => {
+      expect(sanitizeFilename('path\\to\\file.pdf')).not.toContain('\\');
+    });
+
+    it('should strip control characters', () => {
+      expect(sanitizeFilename('file\x00name.pdf')).not.toContain('\x00');
+    });
+
+    it('should truncate to MAX_FILENAME_LENGTH', () => {
+      const longName = 'a'.repeat(300) + '.pdf';
+      expect(sanitizeFilename(longName).length).toBeLessThanOrEqual(MAX_FILENAME_LENGTH);
+    });
+
+    it('should fall back to document for empty result', () => {
+      // '..' is entirely consumed by the traversal-sequence strip, leaving an empty string
+      expect(sanitizeFilename('..')).toBe('document');
+    });
+
+    it('should apply NFKD normalization', () => {
+      // Both forms should produce a consistent result
+      const result = sanitizeFilename('\uFB01le.pdf'); // ﬁ ligature → fi after NFKD
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('truncateErrorMessage', () => {
+    it('should return message unchanged if within limit', () => {
+      const msg = 'short error';
+      expect(truncateErrorMessage(msg)).toBe(msg);
+    });
+
+    it('should truncate messages longer than 200 characters', () => {
+      const msg = 'a'.repeat(300);
+      const result = truncateErrorMessage(msg);
+      expect(result.length).toBeLessThanOrEqual(201); // 200 + ellipsis char
+      expect(result.endsWith('…')).toBe(true);
+    });
+
+    it('should respect custom maxLength', () => {
+      const msg = 'a'.repeat(100);
+      const result = truncateErrorMessage(msg, 50);
+      expect(result.length).toBeLessThanOrEqual(51);
+      expect(result.endsWith('…')).toBe(true);
+    });
+  });
+
+  describe('wrapUnknownError', () => {
+    it('should wrap Error instances in NodeApiError', () => {
+      const original = new Error('network timeout');
+      const wrapped = wrapUnknownError(mockNode, original, 0);
+      expect(wrapped.message).toContain('Failed to process document with Deep-OCR API');
+    });
+
+    it('should wrap non-Error values in NodeApiError', () => {
+      const wrapped = wrapUnknownError(mockNode, 'string error', 0);
+      expect(wrapped.message).toContain('Failed to process document with Deep-OCR API');
     });
 
     it('should include itemIndex in error context', () => {
-      const originalError = { message: 'Connection refused' };
-      const error = createApiError(mockNode, originalError, 2);
-      expect(error.context).toBeDefined();
-      expect(error.context?.itemIndex).toBe(2);
+      const wrapped = wrapUnknownError(mockNode, new Error('fail'), 3);
+      expect(wrapped.context?.itemIndex).toBe(3);
     });
   });
 });
