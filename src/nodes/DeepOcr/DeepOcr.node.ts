@@ -196,26 +196,17 @@ export class DeepOcr implements INodeType {
         // Make API request — document_type as query param, file as multipart.
         // When documentType is 'auto', omit the parameter entirely so the API
         // classifies the document automatically.
-        // requestWithAuthentication (request-library) is used because httpRequestWithAuthentication
-        // (IHttpRequestOptions) does not support the formData property for multipart uploads.
-        // eslint-disable-next-line @n8n/community-nodes/no-deprecated-workflow-functions -- httpRequestWithAuthentication (IHttpRequestOptions) does not support formData for multipart uploads
-        const rawResponse: unknown = await this.helpers.requestWithAuthentication.call(
+        const form = new FormData();
+        form.append('file', new Blob([buffer], { type: binaryData.mimeType }), safeFilename);
+
+        const rawResponse: unknown = await this.helpers.httpRequestWithAuthentication.call(
           this,
           'deepOcrApi',
           {
             method: 'POST',
             url: 'https://api.deep-ocr.com/v1/ocr',
             qs: documentType !== 'auto' ? { document_type: documentType } : {},
-            formData: {
-              file: {
-                value: buffer,
-                options: {
-                  filename: safeFilename,
-                  contentType: binaryData.mimeType,
-                },
-              },
-            },
-            json: true,
+            body: form as unknown as IDataObject,
           },
         );
 
