@@ -81,3 +81,53 @@ jobs:
         # Note: @n8n/scan-community-package intentionally removed from this workflow — repeated
         # invocation issues documented in PRs #47–#51.
         run: pnpm publish --no-git-checks --access public --provenance
+
+  sync-version:
+    name: Sync package.json version + dist
+    runs-on: ubuntu-latest
+    needs: [semantic-release, publish]
+    if: needs.semantic-release.outputs.new_release_published == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # Check out the release tag so dist/ is built from the exact released code
+          ref: v${{ needs.semantic-release.outputs.new_release_version }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - uses: pnpm/action-setup@v5
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Set version in package.json
+        run: pnpm version ${{ needs.semantic-release.outputs.new_release_version }} --no-git-tag-version
+
+      - name: Build dist
+        run: pnpm build
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v7
+        with:
+          # Use PAT so the created PR triggers CI workflows.
+          # Falls back to GITHUB_TOKEN if PAT_TOKEN is not set — CI won't auto-run in that case.
+          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          base: main
+          branch: chore/release-v${{ needs.semantic-release.outputs.new_release_version }}
+          commit-message: "chore: sync package.json and dist to v${{ needs.semantic-release.outputs.new_release_version }}"
+          title: "chore: sync package.json and dist to v${{ needs.semantic-release.outputs.new_release_version }}"
+          body: |
+            Automated sync after npm release v${{ needs.semantic-release.outputs.new_release_version }}.
+
+            - Updates `package.json` version to match the published npm version
+            - Rebuilds `dist/` from the release tag so the repo stays current
+
+            Required for n8n submission vetting (checks both repo version and credential file).
+          labels: automated
