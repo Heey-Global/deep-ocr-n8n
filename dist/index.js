@@ -11,6 +11,6 @@ exports.DeepOcrApi = exports.DeepOcr = void 0;
 var DeepOcr_node_1 = require("./nodes/DeepOcr/DeepOcr.node");
 Object.defineProperty(exports, "DeepOcr", { enumerable: true, get: function () { return DeepOcr_node_1.DeepOcr; } });
 // Credential exports
-var DeepOcrApi_credential_1 = require("./credentials/DeepOcrApi.credential");
-Object.defineProperty(exports, "DeepOcrApi", { enumerable: true, get: function () { return DeepOcrApi_credential_1.DeepOcrApi; } });
+var DeepOcrApi_credentials_1 = require("./credentials/DeepOcrApi.credentials");
+Object.defineProperty(exports, "DeepOcrApi", { enumerable: true, get: function () { return DeepOcrApi_credentials_1.DeepOcrApi; } });
 //# sourceMappingURL=index.js.map

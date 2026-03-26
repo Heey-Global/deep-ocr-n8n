@@ -9,4 +9,4 @@
 export { DeepOcr } from './nodes/DeepOcr/DeepOcr.node';
 
 // Credential exports
-export { DeepOcrApi } from './credentials/DeepOcrApi.credential';
+export { DeepOcrApi } from './credentials/DeepOcrApi.credentials';
