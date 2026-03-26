@@ -61,6 +61,48 @@ npm install n8n-nodes-deep-ocr
 | `handwriting` | Full transcription with unclear-word markers, confidence rating, language |
 | `generic` | Flexible extraction for any document — adapts structure to the content |
 
+## 📤 Output Examples
+
+### Invoice
+```json
+{
+  "vendor": { "name": "ACME GmbH", "address": "Musterstr. 1, 10115 Berlin", "vat_id": "DE123456789" },
+  "invoice_number": "RE-2024-00842",
+  "invoice_date": "2024-03-15",
+  "due_date": "2024-04-14",
+  "line_items": [
+    { "description": "Consulting Services", "quantity": 8, "unit_price": 150.00, "total": 1200.00 }
+  ],
+  "subtotal": 1200.00,
+  "tax_rate": 19,
+  "tax_amount": 228.00,
+  "total": 1428.00,
+  "iban": "DE89 3704 0044 0532 0130 00",
+  "filename": "invoice.pdf",
+  "document_type": "invoice",
+  "metadata": { "pages": 1 }
+}
+```
+
+### Receipt
+```json
+{
+  "merchant": { "name": "REWE City", "address": "Friedrichstr. 12, 10117 Berlin" },
+  "date": "2024-03-22",
+  "items": [
+    { "description": "Bioland Äpfel 1kg", "quantity": 1, "price": 2.49 },
+    { "description": "Mineralwasser 6x1.5L", "quantity": 1, "price": 3.99 }
+  ],
+  "subtotal": 6.48,
+  "tax_breakdown": [{ "rate": 7, "amount": 0.42 }],
+  "total": 6.90,
+  "payment_method": "EC-Karte",
+  "filename": "receipt.jpg",
+  "document_type": "receipt",
+  "metadata": { "pages": 1 }
+}
+```
+
 ## 📋 Example Workflow
 
 ```json
@@ -93,6 +135,30 @@ npm install n8n-nodes-deep-ocr
 | PNG      | image/png       | 10MB     |
 | JPG/JPEG | image/jpeg      | 10MB     |
 | WebP     | image/webp      | 10MB     |
+
+## 🔧 Troubleshooting
+
+### "Unsupported file type" error
+The node only accepts PDF, PNG, JPG, JPEG, and WebP files. Make sure the upstream node sets the correct MIME type. If you're using **HTTP Request** to download a file, check that the response has a proper `Content-Type` header.
+
+### "File size exceeds maximum allowed size"
+The Deep-OCR API accepts files up to **10MB**. For larger PDFs, consider compressing them first or splitting them into individual pages.
+
+### "Connection tested successfully" but processing fails
+Your API key is valid, but the key may not have enough quota remaining. Check your usage in the [Deep-OCR Dashboard](https://deep-ocr.com).
+
+### Node not appearing in n8n's node picker
+In n8n 2.x, unverified community nodes are hidden from the picker search. Install the node via **Settings → Community Nodes**, then add it to your workflow by importing the following JSON snippet:
+
+```json
+{
+  "type": "n8n-nodes-deep-ocr.deepOcr",
+  "parameters": { "binaryPropertyName": "data", "documentType": "invoice" }
+}
+```
+
+### Binary property not found
+The **Binary Property** field must match the property name set by the previous node. The default is `data` (used by Read Binary File, HTTP Request, etc.). Check the output of the previous node to confirm the property name.
 
 ## 🛠️ Development
 

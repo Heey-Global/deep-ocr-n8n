@@ -1,21 +1,15 @@
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
-import type { INode, JsonObject } from 'n8n-workflow';
-
-/**
- * Error codes for Deep-OCR operations
- */
-export enum DeepOcrErrorCode {
-  INVALID_FILE_TYPE = 'INVALID_FILE_TYPE',
-  FILE_TOO_LARGE = 'FILE_TOO_LARGE',
-  MISSING_BINARY_DATA = 'MISSING_BINARY_DATA',
-  API_ERROR = 'API_ERROR',
-  AUTH_ERROR = 'AUTH_ERROR',
-}
+import type { INode } from 'n8n-workflow';
 
 /**
  * Maximum file size in bytes (10MB)
  */
 export const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
+/**
+ * Maximum safe filename length in characters (enforced on UTF-16 code units, not bytes)
+ */
+export const MAX_FILENAME_LENGTH = 255;
 
 /**
  * Allowed MIME types for document processing
@@ -66,27 +60,15 @@ export function createFileSizeError(
 }
 
 /**
- * Creates a NodeApiError for API failures
- */
-export function createApiError(
-  node: INode,
-  error: Error | JsonObject,
-  itemIndex?: number,
-): NodeApiError {
-  return new NodeApiError(node, error as JsonObject, {
-    message: 'Failed to process document with Deep-OCR API',
-    itemIndex,
-  });
-}
-
-/**
- * Validates MIME type against allowed types
+ * Validates MIME type against allowed types — case-insensitive to handle
+ * non-standard capitalisation from HTTP clients (e.g. image/JPEG).
+ * Rejects undefined/empty to prevent silent bypass.
  */
 export function isValidMimeType(mimeType: string | undefined): boolean {
   if (mimeType === undefined || mimeType.trim() === '') {
-    return false; // Reject files with no declared MIME type
+    return false;
   }
-  return ALLOWED_MIME_TYPES.includes(mimeType);
+  return ALLOWED_MIME_TYPES.includes(mimeType.toLowerCase());
 }
 
 /**
@@ -94,4 +76,44 @@ export function isValidMimeType(mimeType: string | undefined): boolean {
  */
 export function isValidFileSize(sizeBytes: number): boolean {
   return sizeBytes <= MAX_FILE_SIZE;
+}
+
+/**
+ * Sanitizes a filename to prevent path traversal and header injection.
+ * Applies NFKD Unicode normalization first to neutralize homograph attacks,
+ * then strips traversal sequences, path separators, and control characters.
+ * Falls back to 'document' if the result is empty.
+ */
+export function sanitizeFilename(filename: string): string {
+  return (
+    filename
+      .normalize('NFKD')
+      .replace(/\.\./g, '')
+      .replace(/[/\\]/g, '_')
+      .replace(/[<>:"|?*\x00-\x1f]/g, '')
+      .substring(0, MAX_FILENAME_LENGTH) || 'document'
+  );
+}
+
+/**
+ * Truncates an error message to prevent verbose API errors from leaking
+ * document content into workflow logs.
+ */
+export function truncateErrorMessage(message: string, maxLength = 200): string {
+  if (message.length <= maxLength) return message;
+  if (maxLength <= 0) return '';
+  if (maxLength === 1) return '…';
+  return message.substring(0, maxLength - 1) + '…';
+}
+
+/**
+ * Wraps an unknown caught value into a NodeApiError for n8n.
+ * Used for unexpected errors that are neither NodeApiError nor NodeOperationError.
+ */
+export function wrapUnknownError(node: INode, error: unknown, itemIndex?: number): NodeApiError {
+  const message = error instanceof Error ? error.message : 'Unknown error';
+  return new NodeApiError(node, { message }, {
+    message: 'Failed to process document with Deep-OCR API',
+    itemIndex,
+  });
 }
