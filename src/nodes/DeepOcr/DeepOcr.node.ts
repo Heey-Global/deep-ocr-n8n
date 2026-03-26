@@ -6,7 +6,7 @@ import type {
   IDataObject,
   JsonObject,
 } from 'n8n-workflow';
-import { NodeApiError, NodeOperationError, NodeConnectionTypes } from 'n8n-workflow';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 import {
   isValidMimeType,
   isValidFileSize,
@@ -65,8 +65,8 @@ export class DeepOcr implements INodeType {
     defaults: {
       name: 'Deep-OCR',
     },
-    inputs: [NodeConnectionTypes.Main],
-    outputs: [NodeConnectionTypes.Main],
+    inputs: ['main'],
+    outputs: ['main'],
     usableAsTool: true,
     credentials: [
       {
