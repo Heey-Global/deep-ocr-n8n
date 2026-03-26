@@ -4,9 +4,7 @@ node_modules/
 .yarn/*
 
 # Build output
-dist/
 build/
-*.js.map
 
 # IDE
 .idea/
