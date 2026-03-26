@@ -1,0 +1,14 @@
+{
+  "node": "n8n-nodes-deep-ocr.deepOcr",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["AI", "Utility"],
+  "alias": ["OCR", "document", "invoice", "receipt", "scan", "extract", "pdf"],
+  "resources": {
+    "primaryDocumentation": [
+      {
+        "url": "https://deep-ocr.com"
+      }
+    ]
+  }
+}
