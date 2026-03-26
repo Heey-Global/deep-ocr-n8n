@@ -1,4 +1,4 @@
-import { DeepOcrApi } from '../../src/credentials/DeepOcrApi.credentials';
+import { DeepOcrApi } from '../../src/credentials/DeepOcrApi.credential';
 
 describe('DeepOcrApi Credentials', () => {
   let credentials: DeepOcrApi;

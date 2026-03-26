@@ -46,7 +46,7 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/DeepOcrApi.credentials.js"
+      "dist/credentials/DeepOcrApi.credential.js"
     ],
     "nodes": [
       "dist/nodes/DeepOcr/DeepOcr.node.js"
