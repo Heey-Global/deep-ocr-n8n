@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
-    "@n8n/eslint-plugin-community-nodes": "^0.10.0",
+    "@n8n/eslint-plugin-community-nodes": "^0.17.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.0.0",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
