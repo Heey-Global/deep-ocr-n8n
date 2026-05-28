@@ -432,7 +432,13 @@ describe('DeepOcr Node', () => {
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
       (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
 
-      await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow(originalError);
+      let caught: unknown;
+      try {
+        await node.execute.call(mockExecuteFunctions);
+      } catch (e) {
+        caught = e;
+      }
+      expect(caught).toBe(originalError);
     });
 
     it('should handle network errors gracefully with continueOnFail', async () => {

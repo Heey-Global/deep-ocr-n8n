@@ -10,6 +10,7 @@ import {
   MAX_FILENAME_LENGTH,
   ALLOWED_MIME_TYPES,
 } from '../../src/utils/errors';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 import type { INode } from 'n8n-workflow';
 
 // Mock node for testing error creation functions
@@ -190,6 +191,18 @@ describe('Error Utilities', () => {
     it('should include itemIndex in error context', () => {
       const wrapped = wrapUnknownError(mockNode, new Error('fail'), 3);
       expect(wrapped.context?.itemIndex).toBe(3);
+    });
+
+    it('should pass NodeApiError through unchanged', () => {
+      const original = new NodeApiError(mockNode, { message: 'upstream failure' });
+      const result = wrapUnknownError(mockNode, original, 0);
+      expect(result).toBe(original);
+    });
+
+    it('should pass NodeOperationError through unchanged', () => {
+      const original = new NodeOperationError(mockNode, 'bad input');
+      const result = wrapUnknownError(mockNode, original, 0);
+      expect(result).toBe(original);
     });
   });
 });
