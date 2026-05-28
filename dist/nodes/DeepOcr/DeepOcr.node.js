@@ -162,8 +162,6 @@ class DeepOcr {
                 // classifies the document automatically.
                 const form = new FormData();
                 form.append('file', new Blob([buffer], { type: binaryData.mimeType }), safeFilename);
-                // n8n's httpRequestWithAuthentication accepts FormData at runtime even though
-                // the TypeScript type expects IDataObject — the double-cast is intentional.
                 const rawResponse = await this.helpers.httpRequestWithAuthentication.call(this, 'deepOcrApi', {
                     method: 'POST',
                     url: API_ENDPOINT,
