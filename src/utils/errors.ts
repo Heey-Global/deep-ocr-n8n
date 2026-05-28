@@ -107,10 +107,21 @@ export function truncateErrorMessage(message: string, maxLength = 200): string {
 }
 
 /**
- * Wraps an unknown caught value into a NodeApiError for n8n.
- * Used for unexpected errors that are neither NodeApiError nor NodeOperationError.
+ * Wraps an unknown caught value into an n8n error.
+ *
+ * Pass-through for values that are already NodeApiError or NodeOperationError —
+ * preserving the original lets the @n8n/community-nodes/require-node-api-error
+ * rule see a single typed throw site at the caller instead of an `instanceof`
+ * rethrow branch it can't statically prove safe.
  */
-export function wrapUnknownError(node: INode, error: unknown, itemIndex?: number): NodeApiError {
+export function wrapUnknownError(
+  node: INode,
+  error: unknown,
+  itemIndex?: number,
+): NodeApiError | NodeOperationError {
+  if (error instanceof NodeApiError || error instanceof NodeOperationError) {
+    return error;
+  }
   const message = error instanceof Error ? error.message : 'Unknown error';
   return new NodeApiError(node, { message }, {
     message: 'Failed to process document with Deep-OCR API',

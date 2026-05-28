@@ -5,7 +5,7 @@ import type {
   INodeTypeDescription,
   IDataObject,
 } from 'n8n-workflow';
-import { NodeApiError, NodeOperationError } from 'n8n-workflow';
+import { NodeApiError, NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 import {
   isValidMimeType,
   isValidFileSize,
@@ -64,8 +64,8 @@ export class DeepOcr implements INodeType {
     defaults: {
       name: 'Deep-OCR',
     },
-    inputs: ['main'],
-    outputs: ['main'],
+    inputs: [NodeConnectionTypes.Main],
+    outputs: [NodeConnectionTypes.Main],
     usableAsTool: true,
     credentials: [
       {
@@ -246,9 +246,6 @@ export class DeepOcr implements INodeType {
             pairedItem: { item: itemIndex },
           });
           continue;
-        }
-        if (error instanceof NodeApiError || error instanceof NodeOperationError) {
-          throw error;
         }
         throw wrapUnknownError(this.getNode(), error, itemIndex);
       }
