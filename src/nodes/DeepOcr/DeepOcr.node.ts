@@ -4,7 +4,6 @@ import type {
   INodeType,
   INodeTypeDescription,
   IDataObject,
-  JsonObject,
 } from 'n8n-workflow';
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 import {
@@ -207,8 +206,6 @@ export class DeepOcr implements INodeType {
         const form = new FormData();
         form.append('file', new Blob([buffer], { type: binaryData.mimeType }), safeFilename);
 
-        // n8n's httpRequestWithAuthentication accepts FormData at runtime even though
-        // the TypeScript type expects IDataObject — the double-cast is intentional.
         const rawResponse: unknown = await this.helpers.httpRequestWithAuthentication.call(
           this,
           'deepOcrApi',
@@ -216,7 +213,7 @@ export class DeepOcr implements INodeType {
             method: 'POST',
             url: API_ENDPOINT,
             qs: documentType !== 'auto' ? { document_type: documentType } : {},
-            body: form as unknown as IDataObject,
+            body: form,
           },
         );
 
@@ -224,7 +221,7 @@ export class DeepOcr implements INodeType {
         if (rawResponse === null || rawResponse === undefined || typeof rawResponse !== 'object') {
           throw new NodeApiError(
             this.getNode(),
-            { message: 'Unexpected response format from Deep-OCR API' } as JsonObject,
+            { message: 'Unexpected response format from Deep-OCR API' },
             { itemIndex },
           );
         }
