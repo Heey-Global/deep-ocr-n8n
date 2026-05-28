@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-deep-ocr",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "description": "n8n community node for Deep-OCR document processing API",
   "keywords": [
     "n8n-community-node-package",
