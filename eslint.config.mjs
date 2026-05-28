@@ -49,6 +49,14 @@ export default [
       'n8n-nodes-base/node-class-description-credentials-name-unsuffixed': 'error',
       'n8n-nodes-base/node-class-description-display-name-unsuffixed-trigger-node': 'off',
       'n8n-nodes-base/cred-class-field-documentation-url-miscased': 'off',
+      // These two conflict with @n8n/community-nodes/node-connection-type-literal:
+      // the legacy rules want the string literal ['main'], the current community-nodes
+      // rule wants [NodeConnectionTypes.Main]. The community-nodes plugin reflects the
+      // current n8n guidance, so the literal rules are turned off. If
+      // node-connection-type-literal is ever disabled, re-enable these so the inputs/
+      // outputs shape stays checked by *some* rule.
+      'n8n-nodes-base/node-class-description-inputs-wrong-regular-node': 'off',
+      'n8n-nodes-base/node-class-description-outputs-wrong': 'off',
       // no-credential-reuse parses compiled dist/*.js files and checks for `implements ICredentialType`,
       // which TypeScript removes during compilation — causing false positives for all local credentials.
       '@n8n/community-nodes/no-credential-reuse': 'off',
