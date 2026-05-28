@@ -36,8 +36,8 @@ class DeepOcr {
         defaults: {
             name: 'Deep-OCR',
         },
-        inputs: ['main'],
-        outputs: ['main'],
+        inputs: [n8n_workflow_1.NodeConnectionTypes.Main],
+        outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
         usableAsTool: true,
         credentials: [
             {
@@ -193,9 +193,6 @@ class DeepOcr {
                         pairedItem: { item: itemIndex },
                     });
                     continue;
-                }
-                if (error instanceof n8n_workflow_1.NodeApiError || error instanceof n8n_workflow_1.NodeOperationError) {
-                    throw error;
                 }
                 throw (0, errors_1.wrapUnknownError)(this.getNode(), error, itemIndex);
             }
