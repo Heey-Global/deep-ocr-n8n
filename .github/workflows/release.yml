@@ -22,15 +22,18 @@ jobs:
       new_release_version: ${{ steps.semantic.outputs.new_release_version }}
 
     steps:
+      # renovate: datasource=github-actions depName=actions/checkout
       - uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.event.repository.default_branch }}  # Always use tip of default branch to avoid "local branch behind remote" error
 
+      # renovate: datasource=github-actions depName=actions/setup-node
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
 
+      # renovate: datasource=github-actions depName=pnpm/action-setup
       - uses: pnpm/action-setup@v6
 
       - name: Install dependencies
@@ -38,6 +41,7 @@ jobs:
 
       - name: Semantic Release
         id: semantic
+        # renovate: datasource=github-actions depName=cycjimmy/semantic-release-action
         uses: cycjimmy/semantic-release-action@v6.0.0
         with:
           extra_plugins: |
@@ -57,15 +61,18 @@ jobs:
       id-token: write # for npm provenance
 
     steps:
+      # renovate: datasource=github-actions depName=actions/checkout
       - uses: actions/checkout@v6
         with:
           ref: v${{ needs.semantic-release.outputs.new_release_version }}
 
+      # renovate: datasource=github-actions depName=actions/setup-node
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
 
+      # renovate: datasource=github-actions depName=pnpm/action-setup
       - uses: pnpm/action-setup@v6
 
       - name: Install dependencies
@@ -97,16 +104,19 @@ jobs:
       pull-requests: write
 
     steps:
+      # renovate: datasource=github-actions depName=actions/checkout
       - uses: actions/checkout@v6
         with:
           # Check out the release tag so dist/ is built from the exact released code
           ref: v${{ needs.semantic-release.outputs.new_release_version }}
           fetch-depth: 0
 
+      # renovate: datasource=github-actions depName=actions/setup-node
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
 
+      # renovate: datasource=github-actions depName=pnpm/action-setup
       - uses: pnpm/action-setup@v6
 
       - name: Install dependencies
@@ -119,6 +129,7 @@ jobs:
         run: pnpm build
 
       - name: Create PR
+        # renovate: datasource=github-actions depName=peter-evans/create-pull-request
         uses: peter-evans/create-pull-request@v8
         with:
           # Use PAT so the created PR triggers CI workflows.
