@@ -13,14 +13,17 @@ concurrency:
 jobs:
   test:
     name: Build & Test
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, dev-server, X64]
     steps:
+      # renovate: datasource=github-actions depName=actions/checkout
       - uses: actions/checkout@v6
 
+      # renovate: datasource=github-actions depName=actions/setup-node
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
 
+      # renovate: datasource=github-actions depName=pnpm/action-setup
       - uses: pnpm/action-setup@v6
         # version is read automatically from "packageManager" in package.json
 
@@ -37,6 +40,7 @@ jobs:
         run: pnpm test:coverage
 
       - name: Upload coverage
+        # renovate: datasource=github-actions depName=actions/upload-artifact
         uses: actions/upload-artifact@v7
         if: always()
         with:
