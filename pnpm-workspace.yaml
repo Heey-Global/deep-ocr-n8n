@@ -1,0 +1,19 @@
+overrides:
+  form-data: '>=4.0.4'
+  fast-xml-parser: '>=4.5.4'
+  braces: '>=3.0.3'
+  micromatch: '>=4.0.8'
+  axios: '>=1.13.6'
+  ajv: '>=6.14.0 <9.0.0'
+  jws: '>=3.2.3'
+  qs: '>=6.14.1'
+  lodash: '>=4.17.23'
+
+allowBuilds:
+  '@sentry-internal/node-cpu-profiler': true
+  '@sentry-internal/node-native-stacktrace': true
+  cpu-features: true
+  eslint-plugin-n8n-nodes-base: true
+  isolated-vm: true
+  ssh2: true
+  unrs-resolver: true
