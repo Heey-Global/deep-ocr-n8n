@@ -165,7 +165,7 @@ The **Binary Property** field must match the property name set by the previous n
 ### Prerequisites
 
 - Node.js 22+
-- pnpm 9.1+
+- pnpm 11+
 
 ### Setup
 
