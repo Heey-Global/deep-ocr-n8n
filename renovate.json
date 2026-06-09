@@ -4,6 +4,10 @@
     "config:recommended"
   ],
   "semanticCommits": "enabled",
+  "minimumReleaseAge": "3 days",
+  "vulnerabilityAlerts": {
+    "minimumReleaseAge": "0 days"
+  },
   "packageRules": [
     {
       "matchUpdateTypes": ["patch"],
