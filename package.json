@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-deep-ocr",
-  "version": "1.7.1",
+  "version": "1.8.3",
   "description": "n8n community node for Deep-OCR document processing API",
   "keywords": [
     "n8n-community-node-package",
@@ -72,6 +72,6 @@
     "typescript": "^6.0.2"
   },
   "peerDependencies": {
-    "n8n-workflow": "^2.14.0"
+    "n8n-workflow": "*"
   }
 }

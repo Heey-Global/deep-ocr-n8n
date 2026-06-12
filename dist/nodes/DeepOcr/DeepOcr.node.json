@@ -2,7 +2,7 @@
   "node": "n8n-nodes-deep-ocr.deepOcr",
   "nodeVersion": "1.0",
   "codexVersion": "1.0",
-  "categories": ["AI", "Utility"],
+  "categories": ["Utility", "Productivity"],
   "alias": ["OCR", "document", "invoice", "receipt", "scan", "extract", "pdf"],
   "resources": {
     "primaryDocumentation": [
