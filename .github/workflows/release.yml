@@ -125,8 +125,10 @@ jobs:
           # GitHub only auto-signs commits made via the API by the calling installation
           # token (the GHA bot identity). Commits made via a user PAT come out
           # unsigned and are rejected by the org's required_signatures ruleset.
-          # Trade-off: the sync PR's CI won't auto-trigger; manually push an empty
-          # commit or close-reopen the PR if you need a fresh CI run.
+          # Trade-off: the sync PR's CI won't auto-trigger; close-reopening also
+          # won't help (same github-actions[bot] actor restriction). To run CI,
+          # push an empty commit (`git commit --allow-empty`) or dispatch via
+          # `gh workflow run ci.yml --ref chore/release-v<version>`.
           token: ${{ secrets.GITHUB_TOKEN }}
           sign-commits: true
           base: main
