@@ -121,12 +121,13 @@ jobs:
       - name: Create PR
         uses: peter-evans/create-pull-request@v8
         with:
-          # Use PAT so the created PR triggers CI workflows.
-          # Falls back to GITHUB_TOKEN if PAT_TOKEN is not set — CI won't auto-run in that case.
-          token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
-          # Repo rule "Commits must have verified signatures" rejects unsigned
-          # pushes. sign-commits routes the commit through GitHub's API so the
-          # github-actions[bot] author produces a verified-signature commit.
+          # Must be GITHUB_TOKEN for sign-commits to produce verified signatures —
+          # GitHub only auto-signs commits made via the API by the calling installation
+          # token (the GHA bot identity). Commits made via a user PAT come out
+          # unsigned and are rejected by the org's required_signatures ruleset.
+          # Trade-off: the sync PR's CI won't auto-trigger; manually push an empty
+          # commit or close-reopen the PR if you need a fresh CI run.
+          token: ${{ secrets.GITHUB_TOKEN }}
           sign-commits: true
           base: main
           branch: chore/release-v${{ needs.semantic-release.outputs.new_release_version }}
