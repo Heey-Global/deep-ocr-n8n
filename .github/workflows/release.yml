@@ -124,6 +124,10 @@ jobs:
           # Use PAT so the created PR triggers CI workflows.
           # Falls back to GITHUB_TOKEN if PAT_TOKEN is not set — CI won't auto-run in that case.
           token: ${{ secrets.PAT_TOKEN || secrets.GITHUB_TOKEN }}
+          # Repo rule "Commits must have verified signatures" rejects unsigned
+          # pushes. sign-commits routes the commit through GitHub's API so the
+          # github-actions[bot] author produces a verified-signature commit.
+          sign-commits: true
           base: main
           branch: chore/release-v${{ needs.semantic-release.outputs.new_release_version }}
           commit-message: "chore: sync package.json and dist to v${{ needs.semantic-release.outputs.new_release_version }}"
