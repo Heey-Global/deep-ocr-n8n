@@ -23,8 +23,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.5
       '@n8n/eslint-plugin-community-nodes':
-        specifier: ^0.19.0
-        version: 0.19.0(eslint@9.39.4)(n8n-workflow@2.16.0)(typescript@6.0.3)
+        specifier: ^0.20.0
+        version: 0.20.0(eslint@9.39.4)(n8n-workflow@2.16.0)(typescript@6.0.3)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -632,8 +632,8 @@ packages:
   '@n8n/errors@0.6.0':
     resolution: {integrity: sha512-oVJ0lgRYJY6/aPOW2h37ea5T+nX7/wULRn5FymwYeaiYlsLdqwIQEtGwZrajpzxJB0Os74u4lSH3WWQgZCkgxQ==}
 
-  '@n8n/eslint-plugin-community-nodes@0.19.0':
-    resolution: {integrity: sha512-Jhqagz2Ae92du3G/9EPvf4Ofr/oazMyAYZuDBVt5kL3bBbMxMIrATNkQwopAL9pb0yHK6QrZS/9IITJ+Qirwqg==}
+  '@n8n/eslint-plugin-community-nodes@0.20.0':
+    resolution: {integrity: sha512-5KCHQIWlL79H+YRkoG1UVMZ5OwHJ2i4m2/yYOMESTqPyLbgcRpiQBvnZHCbbSXUjImZ6vtSAPCzvSwYGW28pVQ==}
     peerDependencies:
       eslint: 9.29.0
       n8n-workflow: '>=2'
@@ -4529,7 +4529,7 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.19.0(eslint@9.39.4)(n8n-workflow@2.16.0)(typescript@6.0.3)':
+  '@n8n/eslint-plugin-community-nodes@0.20.0(eslint@9.39.4)(n8n-workflow@2.16.0)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/typescript-estree': 8.61.0(typescript@6.0.3)
       '@typescript-eslint/utils': 8.61.0(eslint@9.39.4)(typescript@6.0.3)
