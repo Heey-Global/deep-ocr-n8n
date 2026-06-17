@@ -21,7 +21,8 @@ const ALLOWED_DOCUMENT_TYPES = [
 /**
  * Deep-OCR Node
  *
- * Extract structured data from documents using the Deep-OCR API.
+ * AI-powered OCR for invoices, receipts, contracts, IDs, bank statements
+ * and more — returns structured JSON ready to use.
  * Supports PDF, PNG, JPG, JPEG, and WebP formats up to 10MB.
  */
 class DeepOcr {
@@ -32,7 +33,7 @@ class DeepOcr {
         group: ['transform'],
         version: 1,
         subtitle: '={{$parameter["documentType"]}}',
-        description: 'Extract structured data from documents using Deep-OCR API',
+        description: 'AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use',
         defaults: {
             name: 'Deep-OCR',
         },
