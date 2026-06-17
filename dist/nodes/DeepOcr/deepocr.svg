@@ -1,15 +1,18 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#1A1A1A"/>
-  <!-- Document outline -->
-  <rect x="8" y="6" width="14" height="18" rx="2" stroke="#B9FF00" stroke-width="1.5" fill="none"/>
-  <!-- Folded corner -->
-  <path d="M18 6 L22 10" stroke="#B9FF00" stroke-width="1.5" stroke-linecap="round"/>
-  <path d="M18 6 L18 10 L22 10" stroke="#B9FF00" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
-  <!-- Scan lines -->
-  <line x1="11" y1="13" x2="19" y2="13" stroke="#B9FF00" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="11" y1="16" x2="19" y2="16" stroke="#B9FF00" stroke-width="1.5" stroke-linecap="round"/>
-  <line x1="11" y1="19" x2="16" y2="19" stroke="#B9FF00" stroke-width="1.5" stroke-linecap="round"/>
-  <!-- Scan line indicator -->
-  <line x1="24" y1="12" x2="24" y2="22" stroke="#B9FF00" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
-  <line x1="22" y1="17" x2="26" y2="17" stroke="#B9FF00" stroke-width="2" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="heeyGradient" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#B9FF00"/>
+      <stop offset="100%" stop-color="#E3FF00"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="30" fill="url(#heeyGradient)"/>
+  <g transform="translate(21 21) scale(3.25)" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+    <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+    <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+    <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+    <path d="M7 8h8"/>
+    <path d="M7 12h10"/>
+    <path d="M7 16h6"/>
+  </g>
 </svg>
