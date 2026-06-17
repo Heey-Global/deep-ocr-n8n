@@ -1,6 +1,6 @@
 # n8n-nodes-deep-ocr
 
-N8N Community Node for the [Deep-OCR Service](https://deep-ocr.com) — AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more. Returns structured JSON ready to use.
+N8N Community Node for the [Deep-OCR Service](https://deep-ocr.com) — AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use.
 
 [![npm version](https://badge.fury.io/js/n8n-nodes-deep-ocr.svg)](https://www.npmjs.com/package/n8n-nodes-deep-ocr)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -33,6 +33,8 @@ You hand it a document, it hands you back clean JSON. No regex, no template matc
   "iban": "DE89 3704 0044 0532 0130 00"
 }
 ```
+
+(Every response also includes `filename`, `document_type`, and a `metadata` object — see [Output Examples](#-output-examples) below for the full shape.)
 
 Drop it into any workflow that needs accounting, expense tracking, KYC, or document classification.
 

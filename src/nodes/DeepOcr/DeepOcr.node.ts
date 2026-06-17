@@ -49,7 +49,8 @@ interface OcrApiResponse {
 /**
  * Deep-OCR Node
  *
- * Extract structured data from documents using the Deep-OCR API.
+ * AI-powered OCR for invoices, receipts, contracts, IDs, bank statements
+ * and more — returns structured JSON ready to use.
  * Supports PDF, PNG, JPG, JPEG, and WebP formats up to 10MB.
  */
 export class DeepOcr implements INodeType {
