@@ -1,9 +1,40 @@
 # n8n-nodes-deep-ocr
 
-N8N Community Node for the [Deep-OCR Service](https://deep-ocr.com) - Extract structured data from documents using AI-powered OCR.
+N8N Community Node for the [Deep-OCR Service](https://deep-ocr.com) — AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more. Returns structured JSON ready to use.
 
 [![npm version](https://badge.fury.io/js/n8n-nodes-deep-ocr.svg)](https://www.npmjs.com/package/n8n-nodes-deep-ocr)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+## 💡 What it does
+
+You hand it a document, it hands you back clean JSON. No regex, no template matching, no per-vendor parser.
+
+- **Invoices** → vendor, line items, tax breakdown, totals, IBAN, due date
+- **Receipts** → merchant, items with per-item tax, payment method
+- **Bank statements** → account holder, balances, full transaction list
+- **Contracts** → parties, dates, obligations, governing law, signatures
+- **IDs / passports** → personal data + MRZ lines
+- **Payslips, delivery notes, purchase orders, handwriting** → and more
+
+### Example: invoice PDF → structured JSON
+
+```json
+{
+  "vendor": { "name": "ACME GmbH", "vat_id": "DE123456789" },
+  "invoice_number": "RE-2024-00842",
+  "invoice_date": "2024-03-15",
+  "due_date": "2024-04-14",
+  "line_items": [
+    { "description": "Consulting", "quantity": 8, "unit_price": 150.00, "total": 1200.00 }
+  ],
+  "subtotal": 1200.00,
+  "tax_amount": 228.00,
+  "total": 1428.00,
+  "iban": "DE89 3704 0044 0532 0130 00"
+}
+```
+
+Drop it into any workflow that needs accounting, expense tracking, KYC, or document classification.
 
 ## 🚀 Features
 

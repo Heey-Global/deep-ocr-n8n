@@ -32,7 +32,7 @@ class DeepOcr {
         group: ['transform'],
         version: 1,
         subtitle: '={{$parameter["documentType"]}}',
-        description: 'Extract structured data from documents using Deep-OCR API',
+        description: 'AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use',
         defaults: {
             name: 'Deep-OCR',
         },
