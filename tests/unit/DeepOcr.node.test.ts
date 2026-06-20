@@ -2,6 +2,9 @@ import { DeepOcr } from '../../src/nodes/DeepOcr/DeepOcr.node';
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
 import { mockDeep } from 'jest-mock-extended';
+// Same source of truth the production code reads — guarantees the client-id
+// assertion stays in lockstep with whatever semantic-release publishes.
+import { version as PACKAGE_VERSION } from '../../package.json';
 
 describe('DeepOcr Node', () => {
   let node: DeepOcr;
@@ -186,6 +189,46 @@ describe('DeepOcr Node', () => {
           method: 'POST',
           url: 'https://api.deep-ocr.com/v1/ocr',
           qs: { document_type: 'receipt' },
+        }),
+      );
+    });
+
+    it('sends User-Agent + X-Deep-OCR-Client identifying as deep-ocr-n8n/<version>', async () => {
+      // Every outbound API call MUST carry both client-identifier headers so
+      // deep-ocr-api can attribute traffic to the n8n plugin and version-bucket
+      // it. PACKAGE_VERSION is imported from the same package.json the
+      // production code reads, so a semantic-release bump propagates here
+      // automatically — no risk of the assertion freezing on a stale version.
+      const inputItems: INodeExecutionData[] = [{ json: {} }];
+      const binaryBuffer = Buffer.from('test pdf content');
+
+      (mockExecuteFunctions.getInputData as jest.Mock).mockReturnValue(inputItems);
+      (mockExecuteFunctions.getNodeParameter as jest.Mock)
+        .mockReturnValueOnce('data')
+        .mockReturnValueOnce('invoice');
+      (mockExecuteFunctions.helpers.assertBinaryData as jest.Mock).mockReturnValue({
+        mimeType: 'application/pdf',
+        fileName: 'invoice.pdf',
+      });
+      (mockExecuteFunctions.helpers.getBinaryDataBuffer as jest.Mock).mockResolvedValue(binaryBuffer);
+      (mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock).mockResolvedValue({
+        success: true,
+        filename: 'invoice.pdf',
+        document_type: 'invoice',
+        content: {},
+        metadata: {},
+      });
+
+      await node.execute.call(mockExecuteFunctions);
+
+      const expectedClientId = `deep-ocr-n8n/${PACKAGE_VERSION}`;
+      expect(mockExecuteFunctions.helpers.httpRequestWithAuthentication).toHaveBeenCalledWith(
+        'deepOcrApi',
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'User-Agent': expectedClientId,
+            'X-Deep-OCR-Client': expectedClientId,
+          }),
         }),
       );
     });
