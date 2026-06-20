@@ -27,17 +27,20 @@ const API_ENDPOINT = 'https://api.deep-ocr.com/v1/ocr';
  * Client identifier the API logs and attributes traffic by.
  * Format pinned with deep-ocr-api: `deep-ocr-n8n/<semver>` (e.g.
  * `deep-ocr-n8n/1.9.0`). Sent on EVERY outbound API call as:
- *   - `User-Agent` header (web-standard; already surfaces in request_logs.user_agent)
- *   - `X-Deep-OCR-Client` header (canonical, custom; survives even if n8n's
- *     HTTP layer strips or overrides the UA)
+ *   - `User-Agent` header (web-standard; surfaces in request_logs.user_agent)
+ *   - `X-Deep-OCR-Client` header (canonical, custom — defence in depth in
+ *     case a future n8n version resets the UA)
  * The API parser uses X-Deep-OCR-Client as the authoritative source, with
  * User-Agent as the fallback for callers that can't set custom headers.
  */
 const CLIENT_ID = `deep-ocr-n8n/${PACKAGE_VERSION}`;
-const CLIENT_HEADERS: Record<string, string> = {
+// Frozen so any downstream mutation attempt throws under strict mode rather
+// than silently polluting the shared constant across executions. The call
+// site also spreads into a fresh object — belt + braces.
+const CLIENT_HEADERS: Readonly<Record<string, string>> = Object.freeze({
   'User-Agent': CLIENT_ID,
   'X-Deep-OCR-Client': CLIENT_ID,
-};
+});
 
 const ALLOWED_DOCUMENT_TYPES = [
   'auto',
@@ -236,7 +239,11 @@ export class DeepOcr implements INodeType {
             url: API_ENDPOINT,
             qs: documentType !== 'auto' ? { document_type: documentType } : {},
             body: form,
-            headers: CLIENT_HEADERS,
+            // Spread into a fresh object so n8n's auth pipeline (which merges
+            // the credential's Authorization header into requestOptions.headers
+            // via Object.assign in some code paths) can't accumulate on the
+            // shared module-level constant across executions.
+            headers: { ...CLIENT_HEADERS },
           },
         );
 
