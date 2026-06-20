@@ -201,11 +201,12 @@ describe('DeepOcr Node', () => {
       // automatically — no risk of the assertion freezing on a stale version.
       //
       // We execute TWICE and inspect both call sites: this catches a future
-      // regression where the module-level CLIENT_HEADERS constant gets passed
-      // by reference and n8n's auth pipeline accumulates an Authorization
-      // header on it (which would leak across executions and credentials).
-      // The expected invariant is that each execution gets a FRESH headers
-      // object containing exactly the two client-identifier keys.
+      // regression where OUR code path passes the module-level CLIENT_HEADERS
+      // by reference and accumulates state across executions (the test mocks
+      // n8n's helper, so it can only observe what THIS module sends — not
+      // what n8n's real auth pipeline would add downstream). The expected
+      // invariant: each execution gets a FRESH headers object containing
+      // exactly the two client-identifier keys.
       const expectedClientId = `deep-ocr-n8n/${PACKAGE_VERSION}`;
       const runOnce = async (): Promise<void> => {
         const binaryBuffer = Buffer.from('test pdf content');

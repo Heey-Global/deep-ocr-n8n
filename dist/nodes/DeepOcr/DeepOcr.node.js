@@ -20,9 +20,16 @@ const API_ENDPOINT = 'https://api.deep-ocr.com/v1/ocr';
  * User-Agent as the fallback for callers that can't set custom headers.
  */
 const CLIENT_ID = `deep-ocr-n8n/${package_json_1.version}`;
-// Frozen so any downstream mutation attempt throws under strict mode rather
-// than silently polluting the shared constant across executions. The call
-// site also spreads into a fresh object — belt + braces.
+// Frozen + spread-at-call-site (two-layer defence). n8n-core's auth pipeline
+// is implemented outside this repo and historically merges the credential's
+// Authorization header into requestOptions.headers via Object.assign in some
+// code paths. If CLIENT_HEADERS were passed by reference into that pipeline,
+// an Authorization header could accumulate on the shared module-level
+// constant — leaking across executions and credentials. Two layers:
+//   1. Object.freeze — any direct mutation throws under strict mode rather
+//      than silently polluting the constant.
+//   2. The call site uses `headers: { ...CLIENT_HEADERS }` — n8n's pipeline
+//      mutates the per-call copy, not the canonical source.
 const CLIENT_HEADERS = Object.freeze({
     'User-Agent': CLIENT_ID,
     'X-Deep-OCR-Client': CLIENT_ID,
@@ -190,10 +197,7 @@ class DeepOcr {
                     url: API_ENDPOINT,
                     qs: documentType !== 'auto' ? { document_type: documentType } : {},
                     body: form,
-                    // Spread into a fresh object so n8n's auth pipeline (which merges
-                    // the credential's Authorization header into requestOptions.headers
-                    // via Object.assign in some code paths) can't accumulate on the
-                    // shared module-level constant across executions.
+                    // Fresh per-call copy — see CLIENT_HEADERS for the rationale.
                     headers: { ...CLIENT_HEADERS },
                 });
                 // Validate response structure before accessing fields
