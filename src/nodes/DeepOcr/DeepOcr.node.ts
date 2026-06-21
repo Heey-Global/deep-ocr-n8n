@@ -15,9 +15,39 @@ import {
   truncateErrorMessage,
   wrapUnknownError,
 } from '../../utils/errors';
+// Single source of truth for the published version — keeps the client
+// identifier strings in lockstep with semantic-release bumps without a
+// hardcoded version literal anywhere.
+import { version as PACKAGE_VERSION } from '../../../package.json';
 
 /** Deep-OCR API endpoint */
 const API_ENDPOINT = 'https://api.deep-ocr.com/v1/ocr';
+
+/**
+ * Client identifier the API logs and attributes traffic by.
+ * Format pinned with deep-ocr-api: `deep-ocr-n8n/<semver>` (e.g.
+ * `deep-ocr-n8n/1.9.0`). Sent on EVERY outbound API call as:
+ *   - `User-Agent` header (web-standard; surfaces in request_logs.user_agent)
+ *   - `X-Deep-OCR-Client` header (canonical, custom — defence in depth in
+ *     case a future n8n version resets the UA)
+ * The API parser uses X-Deep-OCR-Client as the authoritative source, with
+ * User-Agent as the fallback for callers that can't set custom headers.
+ */
+const CLIENT_ID = `deep-ocr-n8n/${PACKAGE_VERSION}`;
+// Frozen + spread-at-call-site (two-layer defence). n8n-core's auth pipeline
+// is implemented outside this repo and historically merges the credential's
+// Authorization header into requestOptions.headers via Object.assign in some
+// code paths. If CLIENT_HEADERS were passed by reference into that pipeline,
+// an Authorization header could accumulate on the shared module-level
+// constant — leaking across executions and credentials. Two layers:
+//   1. Object.freeze — any direct mutation throws under strict mode rather
+//      than silently polluting the constant.
+//   2. The call site uses `headers: { ...CLIENT_HEADERS }` — n8n's pipeline
+//      mutates the per-call copy, not the canonical source.
+const CLIENT_HEADERS: Readonly<Record<string, string>> = Object.freeze({
+  'User-Agent': CLIENT_ID,
+  'X-Deep-OCR-Client': CLIENT_ID,
+});
 
 const ALLOWED_DOCUMENT_TYPES = [
   'auto',
@@ -216,6 +246,8 @@ export class DeepOcr implements INodeType {
             url: API_ENDPOINT,
             qs: documentType !== 'auto' ? { document_type: documentType } : {},
             body: form,
+            // Fresh per-call copy — see CLIENT_HEADERS for the rationale.
+            headers: { ...CLIENT_HEADERS },
           },
         );
 

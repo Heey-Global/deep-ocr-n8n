@@ -2,6 +2,9 @@ import { DeepOcr } from '../../src/nodes/DeepOcr/DeepOcr.node';
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
 import { mockDeep } from 'jest-mock-extended';
+// Same source of truth the production code reads — guarantees the client-id
+// assertion stays in lockstep with whatever semantic-release publishes.
+import { version as PACKAGE_VERSION } from '../../package.json';
 
 describe('DeepOcr Node', () => {
   let node: DeepOcr;
@@ -188,6 +191,76 @@ describe('DeepOcr Node', () => {
           qs: { document_type: 'receipt' },
         }),
       );
+    });
+
+    it('sends User-Agent + X-Deep-OCR-Client identifying as deep-ocr-n8n/<version> on every execution', async () => {
+      // Every outbound API call MUST carry both client-identifier headers so
+      // deep-ocr-api can attribute traffic to the n8n plugin and version-bucket
+      // it. PACKAGE_VERSION is imported from the same package.json the
+      // production code reads, so a semantic-release bump propagates here
+      // automatically — no risk of the assertion freezing on a stale version.
+      //
+      // We execute TWICE and inspect both call sites: this catches a future
+      // regression where OUR code path passes the module-level CLIENT_HEADERS
+      // by reference and accumulates state across executions (the test mocks
+      // n8n's helper, so it can only observe what THIS module sends — not
+      // what n8n's real auth pipeline would add downstream). The expected
+      // invariant: each execution gets a FRESH headers object containing
+      // exactly the two client-identifier keys.
+      const expectedClientId = `deep-ocr-n8n/${PACKAGE_VERSION}`;
+      const runOnce = async (): Promise<void> => {
+        const binaryBuffer = Buffer.from('test pdf content');
+        (mockExecuteFunctions.getInputData as jest.Mock).mockReturnValue([{ json: {} }]);
+        (mockExecuteFunctions.getNodeParameter as jest.Mock)
+          .mockReturnValueOnce('data')
+          .mockReturnValueOnce('invoice');
+        (mockExecuteFunctions.helpers.assertBinaryData as jest.Mock).mockReturnValue({
+          mimeType: 'application/pdf',
+          fileName: 'invoice.pdf',
+        });
+        (mockExecuteFunctions.helpers.getBinaryDataBuffer as jest.Mock).mockResolvedValue(
+          binaryBuffer,
+        );
+        (mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock).mockResolvedValue(
+          {
+            success: true,
+            filename: 'invoice.pdf',
+            document_type: 'invoice',
+            content: {},
+            metadata: {},
+          },
+        );
+        await node.execute.call(mockExecuteFunctions);
+      };
+
+      await runOnce();
+      await runOnce();
+
+      const mock = mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock;
+      expect(mock).toHaveBeenCalledTimes(2);
+
+      const firstCallOpts = mock.mock.calls[0][1] as { headers: Record<string, string> };
+      const secondCallOpts = mock.mock.calls[1][1] as { headers: Record<string, string> };
+
+      // Both executions carry the expected identifier headers verbatim.
+      for (const opts of [firstCallOpts, secondCallOpts]) {
+        expect(opts.headers).toEqual(
+          expect.objectContaining({
+            'User-Agent': expectedClientId,
+            'X-Deep-OCR-Client': expectedClientId,
+          }),
+        );
+        // Exactly the two client-id keys — no Authorization / Cookie / etc.
+        // from a previous execution leaking through a shared object.
+        expect(Object.keys(opts.headers).sort()).toEqual(
+          ['User-Agent', 'X-Deep-OCR-Client'].sort(),
+        );
+      }
+
+      // Distinct header objects per call — confirms the call site spreads into
+      // a fresh object rather than passing the frozen constant by reference.
+      // (Even if a future n8n version mutates one, the other stays clean.)
+      expect(firstCallOpts.headers).not.toBe(secondCallOpts.headers);
     });
 
     it('should validate file type', async () => {
