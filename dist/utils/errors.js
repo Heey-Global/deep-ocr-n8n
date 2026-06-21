@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ALLOWED_MIME_TYPES = exports.MAX_FILENAME_LENGTH = exports.MAX_FILE_SIZE = void 0;
+exports.ALLOWED_MIME_TYPES = exports.MAX_FILENAME_LENGTH = exports.MAX_FILE_SIZE_MB = exports.MAX_FILE_SIZE = void 0;
 exports.createFileTypeError = createFileTypeError;
 exports.createFileSizeError = createFileSizeError;
 exports.isValidMimeType = isValidMimeType;
@@ -10,15 +10,22 @@ exports.truncateErrorMessage = truncateErrorMessage;
 exports.wrapUnknownError = wrapUnknownError;
 const n8n_workflow_1 = require("n8n-workflow");
 /**
- * Maximum file size in bytes (10MB)
+ * Maximum file size in bytes (100MB) — mirrors the API's documented
+ * upload limit from EXTRACTIONS_API_CONTRACT (`104_857_600 bytes`).
+ * Keep this in lockstep with the API: rejecting locally what the API
+ * would accept is exactly the contract drift this constant exists to
+ * avoid.
  */
-exports.MAX_FILE_SIZE = 10 * 1024 * 1024;
+exports.MAX_FILE_SIZE = 100 * 1024 * 1024;
+/** MAX_FILE_SIZE rendered as a "100MB" string for error messages. */
+exports.MAX_FILE_SIZE_MB = Math.round(exports.MAX_FILE_SIZE / 1024 / 1024);
 /**
  * Maximum safe filename length in characters (enforced on UTF-16 code units, not bytes)
  */
 exports.MAX_FILENAME_LENGTH = 255;
 /**
- * Allowed MIME types for document processing
+ * Allowed MIME types for document processing. Mirrors the API allowlist
+ * (PDF + PNG / JPEG / WebP / TIFF).
  */
 exports.ALLOWED_MIME_TYPES = [
     'application/pdf',
@@ -26,12 +33,13 @@ exports.ALLOWED_MIME_TYPES = [
     'image/jpeg',
     'image/jpg',
     'image/webp',
+    'image/tiff',
 ];
 /**
  * Creates a NodeOperationError for invalid file types
  */
 function createFileTypeError(node, mimeType, itemIndex) {
-    return new n8n_workflow_1.NodeOperationError(node, `Unsupported file type: ${mimeType}. Supported types: PDF, PNG, JPG, JPEG, WebP`, {
+    return new n8n_workflow_1.NodeOperationError(node, `Unsupported file type: ${mimeType}. Supported types: PDF, PNG, JPG, JPEG, WebP, TIFF`, {
         itemIndex,
         description: `The file has MIME type "${mimeType}" which is not supported by the Deep-OCR API.`,
     });
@@ -41,7 +49,7 @@ function createFileTypeError(node, mimeType, itemIndex) {
  */
 function createFileSizeError(node, sizeBytes, itemIndex) {
     const sizeMB = Math.round(sizeBytes / 1024 / 1024);
-    return new n8n_workflow_1.NodeOperationError(node, `File size (${sizeMB}MB) exceeds maximum allowed size of 10MB`, {
+    return new n8n_workflow_1.NodeOperationError(node, `File size (${sizeMB}MB) exceeds maximum allowed size of ${exports.MAX_FILE_SIZE_MB}MB`, {
         itemIndex,
         description: 'Please reduce the file size or use a smaller document.',
     });

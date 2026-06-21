@@ -4,7 +4,7 @@ import type { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescrip
  *
  * AI-powered OCR for invoices, receipts, contracts, IDs, bank statements
  * and more — returns structured JSON ready to use.
- * Supports PDF, PNG, JPG, JPEG, and WebP formats up to 10MB.
+ * Supports PDF, PNG, JPG, JPEG, WebP, and TIFF formats up to 100MB.
  */
 export declare class DeepOcr implements INodeType {
     description: INodeTypeDescription;

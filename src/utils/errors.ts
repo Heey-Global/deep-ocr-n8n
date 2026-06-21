@@ -2,9 +2,16 @@ import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 import type { INode } from 'n8n-workflow';
 
 /**
- * Maximum file size in bytes (10MB)
+ * Maximum file size in bytes (100MB) — mirrors the API's documented
+ * upload limit from EXTRACTIONS_API_CONTRACT (`104_857_600 bytes`).
+ * Keep this in lockstep with the API: rejecting locally what the API
+ * would accept is exactly the contract drift this constant exists to
+ * avoid.
  */
-export const MAX_FILE_SIZE = 10 * 1024 * 1024;
+export const MAX_FILE_SIZE = 100 * 1024 * 1024;
+
+/** MAX_FILE_SIZE rendered as a "100MB" string for error messages. */
+export const MAX_FILE_SIZE_MB = Math.round(MAX_FILE_SIZE / 1024 / 1024);
 
 /**
  * Maximum safe filename length in characters (enforced on UTF-16 code units, not bytes)
@@ -12,7 +19,8 @@ export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 export const MAX_FILENAME_LENGTH = 255;
 
 /**
- * Allowed MIME types for document processing
+ * Allowed MIME types for document processing. Mirrors the API allowlist
+ * (PDF + PNG / JPEG / WebP / TIFF).
  */
 export const ALLOWED_MIME_TYPES = [
   'application/pdf',
@@ -20,6 +28,7 @@ export const ALLOWED_MIME_TYPES = [
   'image/jpeg',
   'image/jpg',
   'image/webp',
+  'image/tiff',
 ];
 
 /**
@@ -32,7 +41,7 @@ export function createFileTypeError(
 ): NodeOperationError {
   return new NodeOperationError(
     node,
-    `Unsupported file type: ${mimeType}. Supported types: PDF, PNG, JPG, JPEG, WebP`,
+    `Unsupported file type: ${mimeType}. Supported types: PDF, PNG, JPG, JPEG, WebP, TIFF`,
     {
       itemIndex,
       description: `The file has MIME type "${mimeType}" which is not supported by the Deep-OCR API.`,
@@ -51,7 +60,7 @@ export function createFileSizeError(
   const sizeMB = Math.round(sizeBytes / 1024 / 1024);
   return new NodeOperationError(
     node,
-    `File size (${sizeMB}MB) exceeds maximum allowed size of 10MB`,
+    `File size (${sizeMB}MB) exceeds maximum allowed size of ${MAX_FILE_SIZE_MB}MB`,
     {
       itemIndex,
       description: 'Please reduce the file size or use a smaller document.',

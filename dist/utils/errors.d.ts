@@ -1,15 +1,22 @@
 import { NodeApiError, NodeOperationError } from 'n8n-workflow';
 import type { INode } from 'n8n-workflow';
 /**
- * Maximum file size in bytes (10MB)
+ * Maximum file size in bytes (100MB) — mirrors the API's documented
+ * upload limit from EXTRACTIONS_API_CONTRACT (`104_857_600 bytes`).
+ * Keep this in lockstep with the API: rejecting locally what the API
+ * would accept is exactly the contract drift this constant exists to
+ * avoid.
  */
 export declare const MAX_FILE_SIZE: number;
+/** MAX_FILE_SIZE rendered as a "100MB" string for error messages. */
+export declare const MAX_FILE_SIZE_MB: number;
 /**
  * Maximum safe filename length in characters (enforced on UTF-16 code units, not bytes)
  */
 export declare const MAX_FILENAME_LENGTH = 255;
 /**
- * Allowed MIME types for document processing
+ * Allowed MIME types for document processing. Mirrors the API allowlist
+ * (PDF + PNG / JPEG / WebP / TIFF).
  */
 export declare const ALLOWED_MIME_TYPES: string[];
 /**
