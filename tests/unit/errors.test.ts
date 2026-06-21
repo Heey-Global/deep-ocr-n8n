@@ -25,20 +25,21 @@ const mockNode: INode = {
 
 describe('Error Utilities', () => {
   describe('constants', () => {
-    it('should have MAX_FILE_SIZE as 10MB', () => {
-      expect(MAX_FILE_SIZE).toBe(10 * 1024 * 1024);
+    it('should have MAX_FILE_SIZE as 100MB matching the API contract', () => {
+      expect(MAX_FILE_SIZE).toBe(100 * 1024 * 1024);
     });
 
     it('should have MAX_FILENAME_LENGTH as 255', () => {
       expect(MAX_FILENAME_LENGTH).toBe(255);
     });
 
-    it('should have correct allowed MIME types', () => {
+    it('should have correct allowed MIME types (including TIFF per the API allowlist)', () => {
       expect(ALLOWED_MIME_TYPES).toContain('application/pdf');
       expect(ALLOWED_MIME_TYPES).toContain('image/png');
       expect(ALLOWED_MIME_TYPES).toContain('image/jpeg');
       expect(ALLOWED_MIME_TYPES).toContain('image/jpg');
       expect(ALLOWED_MIME_TYPES).toContain('image/webp');
+      expect(ALLOWED_MIME_TYPES).toContain('image/tiff');
     });
   });
 
@@ -49,6 +50,7 @@ describe('Error Utilities', () => {
       expect(isValidMimeType('image/jpeg')).toBe(true);
       expect(isValidMimeType('image/jpg')).toBe(true);
       expect(isValidMimeType('image/webp')).toBe(true);
+      expect(isValidMimeType('image/tiff')).toBe(true);
     });
 
     it('should return false for invalid MIME types', () => {
@@ -81,7 +83,7 @@ describe('Error Utilities', () => {
 
     it('should return false for files exceeding limit', () => {
       expect(isValidFileSize(MAX_FILE_SIZE + 1)).toBe(false);
-      expect(isValidFileSize(11 * 1024 * 1024)).toBe(false);
+      expect(isValidFileSize(101 * 1024 * 1024)).toBe(false);
     });
   });
 
@@ -105,17 +107,17 @@ describe('Error Utilities', () => {
 
   describe('createFileSizeError', () => {
     it('should create error with correct message', () => {
-      const error = createFileSizeError(mockNode, 15 * 1024 * 1024, 0);
-      expect(error.message).toContain('exceeds maximum allowed size of 10MB');
+      const error = createFileSizeError(mockNode, 150 * 1024 * 1024, 0);
+      expect(error.message).toContain('exceeds maximum allowed size of 100MB');
     });
 
     it('should include file size in MB in message', () => {
-      const error = createFileSizeError(mockNode, 15 * 1024 * 1024, 0);
-      expect(error.message).toContain('15MB');
+      const error = createFileSizeError(mockNode, 150 * 1024 * 1024, 0);
+      expect(error.message).toContain('150MB');
     });
 
     it('should include itemIndex in error context', () => {
-      const error = createFileSizeError(mockNode, 11 * 1024 * 1024, 3);
+      const error = createFileSizeError(mockNode, 101 * 1024 * 1024, 3);
       expect(error.context).toBeDefined();
       expect(error.context?.itemIndex).toBe(3);
     });
