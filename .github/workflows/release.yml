@@ -119,6 +119,7 @@ jobs:
         run: pnpm build
 
       - name: Create PR
+        id: cpr
         uses: peter-evans/create-pull-request@v8
         with:
           # Must be GITHUB_TOKEN for sign-commits to produce verified signatures —
@@ -143,3 +144,19 @@ jobs:
 
             Required for n8n submission vetting (checks both repo version and credential file).
           labels: automated
+
+      - name: Trigger CI and enable auto-merge on the sync PR
+        if: steps.cpr.outputs.pull-request-number
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: chore/release-v${{ needs.semantic-release.outputs.new_release_version }}
+          PR: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          # Bot-created PRs don't auto-trigger `pull_request` CI (GitHub actor
+          # restriction — see the sign-commits note above), so the required status
+          # check never appears and the PR sits forever. Dispatch CI explicitly on
+          # the sync branch to produce the check, then enable auto-merge so GitHub
+          # lands it once green. This keeps package.json + dist on main in sync with
+          # the published npm version on every release (required for n8n vetting).
+          gh workflow run ci.yml --ref "$BRANCH"
+          gh pr merge "$PR" --squash --auto
