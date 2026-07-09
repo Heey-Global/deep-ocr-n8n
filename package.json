@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-deep-ocr",
-  "version": "1.12.6",
+  "version": "1.12.9",
   "description": "AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use",
   "keywords": [
     "n8n-community-node-package",
