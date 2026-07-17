@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.repository.default_branch }}  # Always use tip of default branch to avoid "local branch behind remote" error
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
 
@@ -61,7 +61,7 @@ jobs:
         with:
           ref: v${{ needs.semantic-release.outputs.new_release_version }}
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
           registry-url: 'https://registry.npmjs.org'
@@ -103,7 +103,7 @@ jobs:
           ref: v${{ needs.semantic-release.outputs.new_release_version }}
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: '24'
 
