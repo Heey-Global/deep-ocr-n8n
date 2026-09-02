@@ -61,7 +61,7 @@
     "@typescript-eslint/parser": "^8.57.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.0",
-    "eslint-plugin-n8n-nodes-base": "^1.16.6",
+    "eslint-plugin-n8n-nodes-base": "^2.0.0",
     "gulp": "^5.0.0",
     "jest": "^30.3.0",
     "jest-mock-extended": "^4.0.0",
