@@ -23,8 +23,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.5
       '@n8n/eslint-plugin-community-nodes':
-        specifier: ^0.23.0
-        version: 0.23.0(eslint@10.7.0)(n8n-workflow@2.16.0)(typescript@7.0.2)
+        specifier: ^0.31.0
+        version: 0.31.0(eslint@10.7.0)(n8n-workflow@2.16.0)(typescript@7.0.2)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -66,7 +66,7 @@ importers:
         version: 3.9.4
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.11(@babel/core@7.29.0)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.7))(jest-util@30.4.1)(jest@30.4.2(@types/node@24.13.3))(typescript@7.0.2)
+        version: 29.4.11(@babel/core@7.29.7)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.7))(jest-util@30.4.1)(jest@30.4.2(@types/node@24.13.3))(typescript@7.0.2)
       typescript:
         specifier: ^7.0.0
         version: 7.0.2
@@ -640,8 +640,8 @@ packages:
   '@n8n/errors@0.6.0':
     resolution: {integrity: sha512-oVJ0lgRYJY6/aPOW2h37ea5T+nX7/wULRn5FymwYeaiYlsLdqwIQEtGwZrajpzxJB0Os74u4lSH3WWQgZCkgxQ==}
 
-  '@n8n/eslint-plugin-community-nodes@0.23.0':
-    resolution: {integrity: sha512-oy6r/Y+Cb5TqjRc84PiL3Yf/yeAfOSZJkJM0cxu75zqAHMV5GE0mr/wIJFZiPhUeXhXYGTo1DVaoSHh8i+8w+g==}
+  '@n8n/eslint-plugin-community-nodes@0.31.0':
+    resolution: {integrity: sha512-D4QogNvztHl4qzqcb5S5W2EygcLDMDH13HfZzMO50JlLkBL0UspXwCeqcT0IFHj9QVagg34hv0yrfxywy7E5iQ==}
     peerDependencies:
       eslint: 9.29.0
       n8n-workflow: '>=2'
@@ -4785,7 +4785,7 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.23.0(eslint@10.7.0)(n8n-workflow@2.16.0)(typescript@7.0.2)':
+  '@n8n/eslint-plugin-community-nodes@0.31.0(eslint@10.7.0)(n8n-workflow@2.16.0)(typescript@7.0.2)':
     dependencies:
       '@typescript-eslint/typescript-estree': 8.63.0(typescript@7.0.2)
       '@typescript-eslint/utils': 8.63.0(eslint@10.7.0)(typescript@7.0.2)
@@ -7883,7 +7883,7 @@ snapshots:
     optionalDependencies:
       typescript: 7.0.2
 
-  ts-jest@29.4.11(@babel/core@7.29.0)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.7))(jest-util@30.4.1)(jest@30.4.2(@types/node@24.13.3))(typescript@7.0.2):
+  ts-jest@29.4.11(@babel/core@7.29.7)(@jest/transform@30.4.1)(@jest/types@30.4.1)(babel-jest@30.4.1(@babel/core@7.29.7))(jest-util@30.4.1)(jest@30.4.2(@types/node@24.13.3))(typescript@7.0.2):
     dependencies:
       bs-logger: 0.2.6
       fast-json-stable-stringify: 2.1.0
@@ -7897,7 +7897,7 @@ snapshots:
       typescript: 7.0.2
       yargs-parser: 21.1.1
     optionalDependencies:
-      '@babel/core': 7.29.0
+      '@babel/core': 7.29.7
       '@jest/transform': 30.4.1
       '@jest/types': 30.4.1
       babel-jest: 30.4.1(@babel/core@7.29.7)
