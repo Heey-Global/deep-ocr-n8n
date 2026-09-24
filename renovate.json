@@ -29,6 +29,12 @@
       "allowedVersions": "<6.1.0"
     },
     {
+      "description": "ajv overrides in pnpm-workspace.yaml are pinned per major line (eslint needs ajv 6); never bump them across majors",
+      "matchDepNames": ["/^ajv@/"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
       "matchDepTypes": ["devDependencies"],
       "matchPackageNames": [
         "eslint",
