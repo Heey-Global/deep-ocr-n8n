@@ -6228,10 +6228,6 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.7
 
-  fdir@6.5.0(picomatch@4.0.7):
-    optionalDependencies:
-      picomatch: 4.0.7
-
   fecha@4.2.3: {}
 
   file-entry-cache@11.1.5:
