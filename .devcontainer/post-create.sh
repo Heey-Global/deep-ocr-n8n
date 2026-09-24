@@ -6,7 +6,8 @@ echo "Setting up Deep-OCR N8N Node Development Environment..."
 # Enable corepack for pnpm management.
 # Install the shims into the user's bin dir: the sandbox runs with
 # no-new-privileges, so sudo is not available.
-BIN_DIR="$HOME/.local/bin"
+USER_HOME="${HOME:-$(getent passwd "$(id -un)" | cut -d: -f6)}"
+BIN_DIR="$USER_HOME/.local/bin"
 mkdir -p "$BIN_DIR"
 export PATH="$BIN_DIR:$PATH"
 export COREPACK_ENABLE_DOWNLOAD_PROMPT=0

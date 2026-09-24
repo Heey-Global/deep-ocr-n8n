@@ -24,6 +24,11 @@
       "automerge": true
     },
     {
+      "description": "typescript-eslint 8.x supports TypeScript <6.1.0 only; raise together with typescript-eslint",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<6.1.0"
+    },
+    {
       "matchDepTypes": ["devDependencies"],
       "matchPackageNames": [
         "eslint",
