@@ -29,9 +29,6 @@
       }
     }
   },
-  "remoteEnv": {
-    "PATH": "/home/node/.local/bin:${containerEnv:PATH}"
-  },
   "postCreateCommand": "bash .devcontainer/post-create.sh",
   "remoteUser": "node"
 }
