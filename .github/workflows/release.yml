@@ -95,6 +95,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+      actions: write # gh workflow run ci.yml on the sync branch
 
     steps:
       - uses: actions/checkout@v7
