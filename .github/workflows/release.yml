@@ -138,7 +138,8 @@ jobs:
           gh api graphql --input /tmp/commit.json --jq '.data.createCommitOnBranch.commit.oid'
 
       - name: Trigger CI on the release PR
-        if: steps.find.outputs.branch
+        # Also after a failed rebuild, so the PR still gets its required check.
+        if: always() && steps.find.outputs.branch
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ steps.find.outputs.branch }}
