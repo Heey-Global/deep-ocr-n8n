@@ -3,7 +3,7 @@ import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
 import { mockDeep } from 'jest-mock-extended';
 // Same source of truth the production code reads — guarantees the client-id
-// assertion stays in lockstep with whatever semantic-release publishes.
+// assertion stays in lockstep with whatever release-please publishes.
 import { version as PACKAGE_VERSION } from '../../package.json';
 
 // Stub the polling sleep so tests don't actually wait between polls.
@@ -721,7 +721,7 @@ describe('DeepOcr Node', () => {
       // Drift-1 fix: every outbound async call (submit + every poll) MUST
       // carry the client-identifier headers so deep-ocr-api can attribute
       // async traffic. PACKAGE_VERSION is imported from the same package.json
-      // the production code reads, so the assertion tracks semantic-release
+      // the production code reads, so the assertion tracks release-please
       // bumps automatically. We also run TWO executions to verify the
       // per-call spread defends the module-level CLIENT_HEADERS constant
       // against mutation accumulation in OUR code path.

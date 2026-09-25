@@ -1,5 +1,12 @@
 name: Release
 
+# Release flow (release-please):
+#   1. Every push to main updates a release PR that bumps package.json, writes
+#      CHANGELOG.md and (via refresh-release-pr) rebuilds dist/.
+#   2. Merging that PR tags the merge commit and publishes it to npm with
+#      provenance. The tagged commit therefore already carries the published
+#      version and dist/, which n8n Creator Portal vetting requires.
+
 on:
   push:
     branches: [main]
@@ -10,48 +17,142 @@ concurrency:
   cancel-in-progress: false  # Never cancel — let a running release finish
 
 jobs:
-  semantic-release:
-    name: Semantic Release
+  release-please:
+    name: Release Please
     runs-on: ubuntu-latest
     permissions:
       contents: write
       issues: write
       pull-requests: write
     outputs:
-      new_release_published: ${{ steps.semantic.outputs.new_release_published }}
-      new_release_version: ${{ steps.semantic.outputs.new_release_version }}
+      release_created: ${{ steps.rp.outputs.release_created }}
+      tag_name: ${{ steps.rp.outputs.tag_name }}
+      version: ${{ steps.rp.outputs.version }}
 
     steps:
-      - uses: actions/checkout@v7
+      - uses: googleapis/release-please-action@v5
+        id: rp
         with:
+          # GITHUB_TOKEN so release-please's API commits are signed by GitHub,
+          # as required by the org's required_signatures ruleset.
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  refresh-release-pr:
+    name: Rebuild dist on release PR
+    runs-on: ubuntu-latest
+    needs: release-please
+    # Runs on every push to main while a release PR is open — not only when
+    # release-please updated it — so dist/ also follows chore/refactor commits
+    # that don't change the changelog.
+    if: needs.release-please.outputs.release_created != 'true'
+    permissions:
+      contents: write
+      pull-requests: read
+      actions: write # gh workflow run ci.yml on the release branch
+
+    steps:
+      - name: Find open release PR
+        id: find
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --base main \
+            --label "autorelease: pending" --json headRefName \
+            --jq '[.[].headRefName | select(startswith("release-please--"))][0] // ""')
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+        if: steps.find.outputs.branch
+        with:
+          ref: ${{ steps.find.outputs.branch }}
           fetch-depth: 0
-          ref: ${{ github.event.repository.default_branch }}  # Always use tip of default branch to avoid "local branch behind remote" error
+          persist-credentials: false # commits go through the API, never git push
+
+      - name: Merge current main locally
+        if: steps.find.outputs.branch
+        run: |
+          # The release branch may be based on an older main. Build dist/ from
+          # what the squash merge will land: the branch merged with current main.
+          # This merge is never pushed; only the rebuilt dist/ is committed below,
+          # so conflicts (e.g. in dist/) can safely resolve to main's side.
+          echo "HEAD_OID=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          git -c user.name=ci -c user.email=ci@localhost merge --no-edit -X theirs origin/main
 
       - uses: actions/setup-node@v7
+        if: steps.find.outputs.branch
         with:
           node-version: '24'
 
       - uses: pnpm/action-setup@v6
+        if: steps.find.outputs.branch
 
       - name: Install dependencies
+        if: steps.find.outputs.branch
         run: pnpm install --frozen-lockfile
 
-      - name: Semantic Release
-        id: semantic
-        uses: cycjimmy/semantic-release-action@v6.0.0
-        with:
-          extra_plugins: |
-            @semantic-release/commit-analyzer
-            @semantic-release/release-notes-generator
-            @semantic-release/github
+      - name: Build dist
+        if: steps.find.outputs.branch
+        run: pnpm build
+
+      - name: Commit dist changes (signed, via API)
+        if: steps.find.outputs.branch
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.find.outputs.branch }}
+        run: |
+          git add -A dist
+          if git diff --cached --quiet "$HEAD_OID" -- dist; then
+            echo "dist/ is up to date"
+            exit 0
+          fi
+          # createCommitOnBranch commits are signed by GitHub, unlike a git push
+          # from the runner, so they pass the required_signatures ruleset.
+          # File contents go through files, not argv, to stay clear of ARG_MAX.
+          : > /tmp/additions.jsonl
+          : > /tmp/deletions.jsonl
+          while IFS=$'\t' read -r status path; do
+            if [ "$status" = "D" ]; then
+              jq -cn --arg p "$path" '{path: $p}' >> /tmp/deletions.jsonl
+            else
+              base64 -w0 "$path" > /tmp/content.b64
+              jq -cn --arg p "$path" --rawfile c /tmp/content.b64 '{path: $p, contents: $c}' >> /tmp/additions.jsonl
+            fi
+          done < <(git diff --cached --name-status --no-renames "$HEAD_OID" -- dist)
+          jq -n \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg branch "$BRANCH" \
+            --arg head "$HEAD_OID" \
+            --slurpfile additions /tmp/additions.jsonl \
+            --slurpfile deletions /tmp/deletions.jsonl \
+            '{
+              query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid } } }",
+              variables: { input: {
+                branch: { repositoryNameWithOwner: $repo, branchName: $branch },
+                message: { headline: "chore: rebuild dist" },
+                expectedHeadOid: $head,
+                fileChanges: { additions: $additions, deletions: $deletions }
+              } }
+            }' > /tmp/commit.json
+          gh api graphql --input /tmp/commit.json --jq '.data.createCommitOnBranch.commit.oid'
+
+      - name: Trigger CI on the release PR
+        # Also after a failed rebuild, so the PR still gets its required check.
+        if: always() && steps.find.outputs.branch
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.find.outputs.branch }}
+        run: |
+          # PRs and commits created with GITHUB_TOKEN don't trigger `pull_request`
+          # CI, so the required status check would never appear. Dispatch it.
+          gh workflow run ci.yml --ref "$BRANCH"
 
   publish:
     name: Build & Publish to npm
     runs-on: ubuntu-latest
-    needs: semantic-release
-    if: needs.semantic-release.outputs.new_release_published == 'true'
+    needs: release-please
+    if: needs.release-please.outputs.release_created == 'true'
     permissions:
       contents: read
       id-token: write # for npm provenance
@@ -59,7 +160,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: v${{ needs.semantic-release.outputs.new_release_version }}
+          ref: ${{ needs.release-please.outputs.tag_name }}
 
       - uses: actions/setup-node@v7
         with:
@@ -71,93 +172,33 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Set release version
-        run: pnpm version ${{ needs.semantic-release.outputs.new_release_version }} --no-git-tag-version
+      - name: Verify package.json matches the release
+        run: |
+          actual=$(node -p 'require("./package.json").version')
+          if [ "$actual" != "${{ needs.release-please.outputs.version }}" ]; then
+            echo "::error::package.json is $actual, release is ${{ needs.release-please.outputs.version }}"
+            exit 1
+          fi
 
       - name: Build
         run: pnpm build
+
+      - name: Check committed dist/ matches the build
+        run: |
+          # Warn instead of failing: the tag already exists at this point, and
+          # a stale committed dist/ doesn't change what gets published.
+          if ! git diff --quiet -- dist || [ -n "$(git ls-files --others --exclude-standard dist)" ]; then
+            echo "::warning::dist/ at ${{ needs.release-please.outputs.tag_name }} differs from a fresh build; the refresh-release-pr job did not catch up before the merge."
+            git status --short dist
+          fi
 
       - name: Test
         run: pnpm test
 
       - name: Publish to npm
-        # Trusted Publishing via OIDC — no NPM_TOKEN needed (id-token: write grants OIDC access)
+        # Trusted Publishing via OIDC — no NPM_TOKEN needed (id-token: write grants OIDC access).
+        # The trusted publisher is bound to this workflow file name (release.yml).
         # --provenance required by n8n from 2026-05-01
         # Note: @n8n/scan-community-package intentionally removed from this workflow — repeated
         # invocation issues documented in PRs #47–#51.
         run: pnpm publish --no-git-checks --access public --provenance
-
-  sync-version:
-    name: Sync package.json version + dist
-    runs-on: ubuntu-latest
-    needs: [semantic-release, publish]
-    if: needs.semantic-release.outputs.new_release_published == 'true'
-    permissions:
-      contents: write
-      pull-requests: write
-      actions: write # gh workflow run ci.yml on the sync branch
-
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          # Check out the release tag so dist/ is built from the exact released code
-          ref: v${{ needs.semantic-release.outputs.new_release_version }}
-          fetch-depth: 0
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version: '24'
-
-      - uses: pnpm/action-setup@v6
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Set version in package.json
-        run: pnpm version ${{ needs.semantic-release.outputs.new_release_version }} --no-git-tag-version
-
-      - name: Build dist
-        run: pnpm build
-
-      - name: Create PR
-        id: cpr
-        uses: peter-evans/create-pull-request@v8
-        with:
-          # Must be GITHUB_TOKEN for sign-commits to produce verified signatures —
-          # GitHub only auto-signs commits made via the API by the calling installation
-          # token (the GHA bot identity). Commits made via a user PAT come out
-          # unsigned and are rejected by the org's required_signatures ruleset.
-          # Trade-off: the sync PR's CI won't auto-trigger; close-reopening also
-          # won't help (same github-actions[bot] actor restriction). To run CI,
-          # push an empty commit (`git commit --allow-empty`) or dispatch via
-          # `gh workflow run ci.yml --ref chore/release-v<version>`.
-          token: ${{ secrets.GITHUB_TOKEN }}
-          sign-commits: true
-          base: main
-          branch: chore/release-v${{ needs.semantic-release.outputs.new_release_version }}
-          commit-message: "chore: sync package.json and dist to v${{ needs.semantic-release.outputs.new_release_version }}"
-          title: "chore: sync package.json and dist to v${{ needs.semantic-release.outputs.new_release_version }}"
-          body: |
-            Automated sync after npm release v${{ needs.semantic-release.outputs.new_release_version }}.
-
-            - Updates `package.json` version to match the published npm version
-            - Rebuilds `dist/` from the release tag so the repo stays current
-
-            Required for n8n submission vetting (checks both repo version and credential file).
-          labels: automated
-
-      - name: Trigger CI and enable auto-merge on the sync PR
-        if: steps.cpr.outputs.pull-request-number
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: chore/release-v${{ needs.semantic-release.outputs.new_release_version }}
-          PR: ${{ steps.cpr.outputs.pull-request-number }}
-        run: |
-          # Bot-created PRs don't auto-trigger `pull_request` CI (GitHub actor
-          # restriction — see the sign-commits note above), so the required status
-          # check never appears and the PR sits forever. Dispatch CI explicitly on
-          # the sync branch to produce the check, then enable auto-merge so GitHub
-          # lands it once green. This keeps package.json + dist on main in sync with
-          # the published npm version on every release (required for n8n vetting).
-          gh workflow run ci.yml --ref "$BRANCH"
-          gh pr merge "$PR" --squash --auto
