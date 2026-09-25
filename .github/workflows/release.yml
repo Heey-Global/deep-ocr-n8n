@@ -182,6 +182,15 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Check committed dist/ matches the build
+        run: |
+          # Warn instead of failing: the tag already exists at this point, and
+          # a stale committed dist/ doesn't change what gets published.
+          if ! git diff --quiet -- dist || [ -n "$(git ls-files --others --exclude-standard dist)" ]; then
+            echo "::warning::dist/ at ${{ needs.release-please.outputs.tag_name }} differs from a fresh build; the refresh-release-pr job did not catch up before the merge."
+            git status --short dist
+          fi
+
       - name: Test
         run: pnpm test
 
