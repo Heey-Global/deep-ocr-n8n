@@ -16,7 +16,7 @@ import {
   wrapUnknownError,
 } from '../../utils/errors';
 // Single source of truth for the published version — keeps the client
-// identifier strings in lockstep with semantic-release bumps without a
+// identifier strings in lockstep with release-please bumps without a
 // hardcoded version literal anywhere.
 import { version as PACKAGE_VERSION } from '../../../package.json';
 
