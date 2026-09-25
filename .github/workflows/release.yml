@@ -58,8 +58,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          branch=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open \
-            --label "autorelease: pending" --json headRefName --jq '.[0].headRefName // ""')
+          branch=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --base main \
+            --label "autorelease: pending" --json headRefName \
+            --jq '[.[].headRefName | select(startswith("release-please--"))][0] // ""')
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v7
@@ -67,15 +68,17 @@ jobs:
         with:
           ref: ${{ steps.find.outputs.branch }}
           fetch-depth: 0
+          persist-credentials: false # commits go through the API, never git push
 
       - name: Merge current main locally
         if: steps.find.outputs.branch
         run: |
           # The release branch may be based on an older main. Build dist/ from
           # what the squash merge will land: the branch merged with current main.
-          # This merge is never pushed; only dist/ is committed below.
+          # This merge is never pushed; only the rebuilt dist/ is committed below,
+          # so conflicts (e.g. in dist/) can safely resolve to main's side.
           echo "HEAD_OID=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-          git -c user.name=ci -c user.email=ci@localhost merge --no-edit origin/main
+          git -c user.name=ci -c user.email=ci@localhost merge --no-edit -X theirs origin/main
 
       - uses: actions/setup-node@v7
         if: steps.find.outputs.branch
