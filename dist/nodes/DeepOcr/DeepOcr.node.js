@@ -4,7 +4,7 @@ exports.DeepOcr = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
 const errors_1 = require("../../utils/errors");
 // Single source of truth for the published version — keeps the client
-// identifier strings in lockstep with semantic-release bumps without a
+// identifier strings in lockstep with release-please bumps without a
 // hardcoded version literal anywhere.
 const package_json_1 = require("../../../package.json");
 /** Deep-OCR API base URL */
