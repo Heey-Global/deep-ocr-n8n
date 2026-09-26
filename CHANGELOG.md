@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.2](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.1...v1.16.2) (2026-09-26)
+
+
+### Bug Fixes
+
+* **deps:** update pnpm to v12.6.0 ([#204](https://github.com/Heey-Global/deep-ocr-n8n/issues/204)) ([60a44e8](https://github.com/Heey-Global/deep-ocr-n8n/commit/60a44e873cf7ba9754bb69d7356f475a095bf492))
+
 ## [1.16.1](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.0...v1.16.1) (2026-09-25)
 
 
