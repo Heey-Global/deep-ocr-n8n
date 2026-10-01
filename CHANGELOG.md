@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.16.3](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.2...v1.16.3) (2026-10-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/node to v24.19.0 ([#209](https://github.com/Heey-Global/deep-ocr-n8n/issues/209)) ([334d721](https://github.com/Heey-Global/deep-ocr-n8n/commit/334d721786a3ac9e1bc902be2da7f6407b9040df))
+* **deps:** update dependency prettier to v3.9.9 ([#206](https://github.com/Heey-Global/deep-ocr-n8n/issues/206)) ([481ce95](https://github.com/Heey-Global/deep-ocr-n8n/commit/481ce958dc5b71e5a5c4c1059e6994f1e173e0bd))
+* **deps:** update dependency ts-jest to v29.4.13 ([#207](https://github.com/Heey-Global/deep-ocr-n8n/issues/207)) ([a934434](https://github.com/Heey-Global/deep-ocr-n8n/commit/a934434c70be8ffbc30c082f5312fb744f783211))
+* **deps:** update eslint to v8.71.0 ([#211](https://github.com/Heey-Global/deep-ocr-n8n/issues/211)) ([cec6eec](https://github.com/Heey-Global/deep-ocr-n8n/commit/cec6eecf153b58864254acc9201666fc7aeb430e))
+
 ## [1.16.2](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.1...v1.16.2) (2026-09-26)
 
 
