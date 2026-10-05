@@ -182,8 +182,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.7(supports-color@8.1.1)
       '@n8n/eslint-plugin-community-nodes':
-        specifier: ^0.34.0
-        version: 0.34.0(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
+        specifier: ^0.35.0
+        version: 0.35.0(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -818,8 +818,8 @@ packages:
   '@n8n/errors@0.6.0':
     resolution: {integrity: sha512-oVJ0lgRYJY6/aPOW2h37ea5T+nX7/wULRn5FymwYeaiYlsLdqwIQEtGwZrajpzxJB0Os74u4lSH3WWQgZCkgxQ==}
 
-  '@n8n/eslint-plugin-community-nodes@0.34.0':
-    resolution: {integrity: sha512-wSI6Q26/+WJ7UOUvCIwfFPjyxbig9skuNDCS4feRL3qLGjlWSzEbB7zfToPh3jSHL7PrF9Pw//gOIi5xeaa1+w==}
+  '@n8n/eslint-plugin-community-nodes@0.35.0':
+    resolution: {integrity: sha512-AJ0ss/StzzFwaCSs15JbG3wGVHJLc9yExhh27g0cS+2jg1lFw60zCyG+N7SDqZv+uJtIfjUtNrSOQtIFNd657w==}
     peerDependencies:
       eslint: 9.29.0
       n8n-workflow: '>=2'
@@ -4918,7 +4918,7 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.34.0(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@n8n/eslint-plugin-community-nodes@0.35.0(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@typescript-eslint/typescript-estree': 8.70.0(supports-color@8.1.1)(typescript@6.0.3)
       '@typescript-eslint/utils': 8.70.0(eslint@10.12.0(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3)
@@ -5485,8 +5485,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.70.0(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.70.1(typescript@6.0.3)
-      '@typescript-eslint/types': 8.70.1
+      '@typescript-eslint/tsconfig-utils': 8.71.0(typescript@6.0.3)
+      '@typescript-eslint/types': 8.71.0
       debug: 4.4.3(supports-color@8.1.1)
       typescript: 6.0.3
     transitivePeerDependencies:
