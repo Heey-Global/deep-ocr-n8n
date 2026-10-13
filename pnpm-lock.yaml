@@ -182,8 +182,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.7(supports-color@8.1.1)
       '@n8n/eslint-plugin-community-nodes':
-        specifier: ^0.34.0
-        version: 0.34.0(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
+        specifier: ^0.35.0
+        version: 0.35.1(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -809,6 +809,9 @@ packages:
   '@n8n/constants@0.20.0':
     resolution: {integrity: sha512-MEOzKdGp/EZP1g/Ivqwy4COXURVMgIlPNC0A0EDkrXyJFoUcNm1rQ0GVS5VWRqndoT8seaOnEBngHaIWx8EN3Q==}
 
+  '@n8n/constants@0.41.1':
+    resolution: {integrity: sha512-abNYZ17W5Oermz5HO1TyQVIC5X0+JnGvJIH2dA465lQkARMD7Nu0p5eYiKSNr5yYbZ9m+iUGFSEZv7nwEtIUhg==}
+
   '@n8n/decorators@1.16.0':
     resolution: {integrity: sha512-AR59M5YX+s7jyWpST8ZXCdRBcfCeGmI9L0ktggMoLEN4bHIaT/qmg6mjSH1M+t4gZ72GN0riKdli07KiIuGV9g==}
 
@@ -818,8 +821,8 @@ packages:
   '@n8n/errors@0.6.0':
     resolution: {integrity: sha512-oVJ0lgRYJY6/aPOW2h37ea5T+nX7/wULRn5FymwYeaiYlsLdqwIQEtGwZrajpzxJB0Os74u4lSH3WWQgZCkgxQ==}
 
-  '@n8n/eslint-plugin-community-nodes@0.34.0':
-    resolution: {integrity: sha512-wSI6Q26/+WJ7UOUvCIwfFPjyxbig9skuNDCS4feRL3qLGjlWSzEbB7zfToPh3jSHL7PrF9Pw//gOIi5xeaa1+w==}
+  '@n8n/eslint-plugin-community-nodes@0.35.1':
+    resolution: {integrity: sha512-HzdrpQGKEfqcwbAc3Bn26gF3/hf1YRWGSX6HZNacBghtsXjAg73BGII50yVCX2NdYJTkIP2Bh8tBLkTKUI2TsA==}
     peerDependencies:
       eslint: 9.29.0
       n8n-workflow: '>=2'
@@ -833,6 +836,9 @@ packages:
   '@n8n/tournament@1.0.6':
     resolution: {integrity: sha512-UGSxYXXVuOX0yL6HTLBStKYwLIa0+JmRKiSZSCMcM2s2Wax984KWT6XIA1TR/27i7yYpDk1MY14KsTPnuEp27A==}
     engines: {node: '>=20.15', pnpm: '>=9.5'}
+
+  '@n8n/utils@1.50.1':
+    resolution: {integrity: sha512-nQr+ppQ/B0Pveh4SWOxXJcRJYYHrg9j7dIr3hLfDG6LgZS3jKPDVh7nhCYJ4wiO/wjDirbJHIVRxnHXzbg0l5A==}
 
   '@n8n/workflow-sdk@0.9.0':
     resolution: {integrity: sha512-+/R3NqfWMsC+3BJPAzom+vB6lQX9fhKrCrLnz2oJTFun32Jd21nSrC4tSc8vqPs1hPtCMx/86wssIRxMb4+PNg==}
@@ -3029,6 +3035,11 @@ packages:
   nan@2.27.0:
     resolution: {integrity: sha512-hC+0LidcL3XE4rp1C4H54KujgXKzbfyTngZTwBByQxsOxCEKZT0MPQ4hOKUH2jU1OYstqdDH4onyHPDzcV0XdQ==}
 
+  nanoid@3.3.18:
+    resolution: {integrity: sha512-DTg4MJbGMWkfi6VZFdNt2/caMbQy4Ou+Op/hJQvGEWcnVfoA1QA+xzRKAzw9jD6+GVOOeYr/mIcuDSdug6F6+w==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
   nanoid@3.3.8:
     resolution: {integrity: sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -3404,6 +3415,11 @@ packages:
 
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
+    hasBin: true
+
+  semver@7.7.3:
+    resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
+    engines: {node: '>=10'}
     hasBin: true
 
   semver@7.8.5:
@@ -4898,6 +4914,8 @@ snapshots:
 
   '@n8n/constants@0.20.0': {}
 
+  '@n8n/constants@0.41.1': {}
+
   '@n8n/decorators@1.16.0':
     dependencies:
       '@n8n/constants': 0.20.0
@@ -4914,8 +4932,9 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.34.0(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@n8n/eslint-plugin-community-nodes@0.35.1(eslint@10.12.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
+      '@n8n/utils': 1.50.1
       '@typescript-eslint/typescript-estree': 8.70.0(supports-color@8.1.1)(typescript@6.0.3)
       '@typescript-eslint/utils': 8.70.0(eslint@10.12.0(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3)
       eslint: 10.12.0(supports-color@8.1.1)
@@ -4947,6 +4966,12 @@ snapshots:
       ast-types: 0.16.1
       esprima-next: 5.8.4
       recast: 0.22.0
+
+  '@n8n/utils@1.50.1':
+    dependencies:
+      '@n8n/constants': 0.41.1
+      nanoid: 3.3.18
+      semver: 7.7.3
 
   '@n8n/workflow-sdk@0.9.0':
     dependencies:
@@ -5481,8 +5506,8 @@ snapshots:
 
   '@typescript-eslint/project-service@8.70.0(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
-      '@typescript-eslint/tsconfig-utils': 8.70.1(typescript@6.0.3)
-      '@typescript-eslint/types': 8.70.1
+      '@typescript-eslint/tsconfig-utils': 8.71.1(typescript@6.0.3)
+      '@typescript-eslint/types': 8.71.1
       debug: 4.4.3(supports-color@8.1.1)
       typescript: 6.0.3
     transitivePeerDependencies:
@@ -7491,6 +7516,8 @@ snapshots:
   nan@2.27.0:
     optional: true
 
+  nanoid@3.3.18: {}
+
   nanoid@3.3.8: {}
 
   napi-postinstall@0.3.4: {}
@@ -7823,6 +7850,8 @@ snapshots:
       sver: 1.8.4
 
   semver@6.3.1: {}
+
+  semver@7.7.3: {}
 
   semver@7.8.5: {}
 
