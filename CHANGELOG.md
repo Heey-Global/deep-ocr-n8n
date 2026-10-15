@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.16.4](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.3...v1.16.4) (2026-10-15)
+
+
+### Bug Fixes
+
+* **deps:** update eslint to v8.71.2 ([#220](https://github.com/Heey-Global/deep-ocr-n8n/issues/220)) ([4faff57](https://github.com/Heey-Global/deep-ocr-n8n/commit/4faff573c13ceed7ba5722145733a6b8229a7305))
+
 ## [1.16.3](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.2...v1.16.3) (2026-10-15)
 
 
