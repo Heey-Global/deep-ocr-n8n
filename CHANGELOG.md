@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.17.0](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.3...v1.17.0) (2026-10-22)
+
+
+### Features
+
+* **deps:** update mcr.microsoft.com/devcontainers/typescript-node docker tag to v5 ([#227](https://github.com/Heey-Global/deep-ocr-n8n/issues/227)) ([af4b5ae](https://github.com/Heey-Global/deep-ocr-n8n/commit/af4b5ae260a1f8dc15324b31158eec6f7f111fbd))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.36.0 ([#222](https://github.com/Heey-Global/deep-ocr-n8n/issues/222)) ([ef1761b](https://github.com/Heey-Global/deep-ocr-n8n/commit/ef1761b6356d21ef0c4ed2549cb19eef233c0261))
+* **deps:** update dependency eslint to v10.13.0 ([#225](https://github.com/Heey-Global/deep-ocr-n8n/issues/225)) ([0830e4c](https://github.com/Heey-Global/deep-ocr-n8n/commit/0830e4c4519eeca991f707ac17b223c9d39e9797))
+* **deps:** update dependency ts-jest to v29.4.15 ([#224](https://github.com/Heey-Global/deep-ocr-n8n/issues/224)) ([4b360b2](https://github.com/Heey-Global/deep-ocr-n8n/commit/4b360b2efa06eaaf19394d287dbaa1c5fa518b3f))
+* **deps:** update eslint to v8.71.2 ([#220](https://github.com/Heey-Global/deep-ocr-n8n/issues/220)) ([4faff57](https://github.com/Heey-Global/deep-ocr-n8n/commit/4faff573c13ceed7ba5722145733a6b8229a7305))
+* **deps:** update eslint to v8.72.0 ([#226](https://github.com/Heey-Global/deep-ocr-n8n/issues/226)) ([b5133ff](https://github.com/Heey-Global/deep-ocr-n8n/commit/b5133fffe4cd58e308bf96cd37f0efc363b468c0))
+* **deps:** update pnpm to v12.14.0 ([#223](https://github.com/Heey-Global/deep-ocr-n8n/issues/223)) ([343e380](https://github.com/Heey-Global/deep-ocr-n8n/commit/343e380e546984d6deff38e11950bde8bea976f3))
+
 ## [1.16.3](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.2...v1.16.3) (2026-10-15)
 
 
