@@ -182,8 +182,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.7(supports-color@8.1.1)
       '@n8n/eslint-plugin-community-nodes':
-        specifier: ^0.37.0
-        version: 0.37.0(eslint@10.13.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
+        specifier: ^0.38.0
+        version: 0.38.1(eslint@10.13.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -809,8 +809,8 @@ packages:
   '@n8n/constants@0.20.0':
     resolution: {integrity: sha512-MEOzKdGp/EZP1g/Ivqwy4COXURVMgIlPNC0A0EDkrXyJFoUcNm1rQ0GVS5VWRqndoT8seaOnEBngHaIWx8EN3Q==}
 
-  '@n8n/constants@0.43.0':
-    resolution: {integrity: sha512-TuJE6ocBGW5TEnXIbDzTpidvMhH5/XdxaDwcQVzZb41wFjWRiiWB1CZ4BkNYI60A10rwQBGmh/y4kXVYx2LiHA==}
+  '@n8n/constants@0.44.1':
+    resolution: {integrity: sha512-O4rvc73N7AV3Q+GM7siJ8LRWKHZ67TdwbLiIRjq96So2AAClnojXSlgsoCW2Gk6mhompWif0XcmABj2DIPQgOA==}
 
   '@n8n/decorators@1.16.0':
     resolution: {integrity: sha512-AR59M5YX+s7jyWpST8ZXCdRBcfCeGmI9L0ktggMoLEN4bHIaT/qmg6mjSH1M+t4gZ72GN0riKdli07KiIuGV9g==}
@@ -821,8 +821,8 @@ packages:
   '@n8n/errors@0.6.0':
     resolution: {integrity: sha512-oVJ0lgRYJY6/aPOW2h37ea5T+nX7/wULRn5FymwYeaiYlsLdqwIQEtGwZrajpzxJB0Os74u4lSH3WWQgZCkgxQ==}
 
-  '@n8n/eslint-plugin-community-nodes@0.37.0':
-    resolution: {integrity: sha512-ZdE72bNBKF1nfnFYJfW72gyyROd7/09I8k8S7+eJgrbA13e649157nEmz8wQw5YrW/mmLs7qS0/BuDSu10JQHQ==}
+  '@n8n/eslint-plugin-community-nodes@0.38.1':
+    resolution: {integrity: sha512-CbVPAP0+MeoCkpgGL+T+yqmVMWagH7Dig10QLlFJACGq/1itinumFjF45KPVLuww4Sa6aP8i4qxW+QVuzwL6xw==}
     peerDependencies:
       eslint: 9.29.0
       n8n-workflow: '>=2'
@@ -837,8 +837,8 @@ packages:
     resolution: {integrity: sha512-UGSxYXXVuOX0yL6HTLBStKYwLIa0+JmRKiSZSCMcM2s2Wax984KWT6XIA1TR/27i7yYpDk1MY14KsTPnuEp27A==}
     engines: {node: '>=20.15', pnpm: '>=9.5'}
 
-  '@n8n/utils@1.52.0':
-    resolution: {integrity: sha512-3stNMFnfx19jNBnyi2pNyZFV39zbZ6CPkPM7HbzYTxu0ZdDZrIH+63R0VabOIbGmSxkuqd8mH776zBc8Hmmtvg==}
+  '@n8n/utils@1.53.1':
+    resolution: {integrity: sha512-M0HB1w2tSyqBGa9zbVHnmV4TVzJQb5aLzFlYuu9AMEGj3GCTWTTNzni7bBrCLq7VeoTMPooxQjEBczRvxgQYqw==}
 
   '@n8n/workflow-sdk@0.9.0':
     resolution: {integrity: sha512-+/R3NqfWMsC+3BJPAzom+vB6lQX9fhKrCrLnz2oJTFun32Jd21nSrC4tSc8vqPs1hPtCMx/86wssIRxMb4+PNg==}
@@ -4914,7 +4914,7 @@ snapshots:
 
   '@n8n/constants@0.20.0': {}
 
-  '@n8n/constants@0.43.0': {}
+  '@n8n/constants@0.44.1': {}
 
   '@n8n/decorators@1.16.0':
     dependencies:
@@ -4932,9 +4932,9 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.37.0(eslint@10.13.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@n8n/eslint-plugin-community-nodes@0.38.1(eslint@10.13.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
-      '@n8n/utils': 1.52.0
+      '@n8n/utils': 1.53.1
       '@typescript-eslint/typescript-estree': 8.70.0(supports-color@8.1.1)(typescript@6.0.3)
       '@typescript-eslint/utils': 8.70.0(eslint@10.13.0(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3)
       eslint: 10.13.0(supports-color@8.1.1)
@@ -4967,9 +4967,10 @@ snapshots:
       esprima-next: 5.8.4
       recast: 0.22.0
 
-  '@n8n/utils@1.52.0':
+  '@n8n/utils@1.53.1':
     dependencies:
-      '@n8n/constants': 0.43.0
+      '@n8n/constants': 0.44.1
+      jssha: 3.3.1
       nanoid: 3.3.18
       semver: 7.7.3
 
