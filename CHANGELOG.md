@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.17.1](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.17.0...v1.17.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.37.0 ([#228](https://github.com/Heey-Global/deep-ocr-n8n/issues/228)) ([753250b](https://github.com/Heey-Global/deep-ocr-n8n/commit/753250b579f90e8c753891fb27dd25bf3a994834))
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.38.0 ([#234](https://github.com/Heey-Global/deep-ocr-n8n/issues/234)) ([eb516d7](https://github.com/Heey-Global/deep-ocr-n8n/commit/eb516d7978ee3f9399c0a7e91c56c2b2e0358a31))
+* **deps:** update eslint to v8.72.1 ([#233](https://github.com/Heey-Global/deep-ocr-n8n/issues/233)) ([22b8f69](https://github.com/Heey-Global/deep-ocr-n8n/commit/22b8f69d1876417acd5a73ef3446f1364a702d60))
+* **deps:** update pnpm to v12.15.0 ([#229](https://github.com/Heey-Global/deep-ocr-n8n/issues/229)) ([f8f97b8](https://github.com/Heey-Global/deep-ocr-n8n/commit/f8f97b8e28a417d2547b799b1d8f2541756fe3a1))
+* **deps:** update pnpm to v12.16.1 ([#229](https://github.com/Heey-Global/deep-ocr-n8n/issues/229)) ([fb02e44](https://github.com/Heey-Global/deep-ocr-n8n/commit/fb02e44f5e25a8275322d546455ea9d48f1b683a))
+* **devcontainer:** drop project-declared Features ([#235](https://github.com/Heey-Global/deep-ocr-n8n/issues/235)) ([5007aa0](https://github.com/Heey-Global/deep-ocr-n8n/commit/5007aa0eb8e5f85109c49b43f14a67bbc24aab65))
+
 ## [1.17.0](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.3...v1.17.0) (2026-10-22)
 
 
