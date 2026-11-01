@@ -337,7 +337,11 @@ export class DeepOcr implements INodeType {
         // priced higher than picking a specific schema) — never default to it,
         // but always send whatever the user picked.
         const form = new FormData();
-        form.append('file', new Blob([buffer], { type: binaryData.mimeType }), safeFilename);
+        form.append(
+          'file',
+          new Blob([new Uint8Array(buffer)], { type: binaryData.mimeType }),
+          safeFilename,
+        );
         form.append('document_type', documentType);
 
         // Step 1: POST → 202 + Extraction { id, … }
