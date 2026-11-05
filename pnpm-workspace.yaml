@@ -18,6 +18,6 @@ allowBuilds:
   '@sentry/node-native-stacktrace': true
   cpu-features: true
   eslint-plugin-n8n-nodes-base: true
-  isolated-vm: true
+  isolated-vm: false
   ssh2: true
   unrs-resolver: true
