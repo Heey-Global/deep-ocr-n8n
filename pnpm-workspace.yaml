@@ -11,6 +11,8 @@ overrides:
   lodash: '^4.18.1'
   follow-redirects: '^1.16.2'
   'nanoid@<4': '^3.3.18'
+  'glob@>=10 <14': '^14.0.2'
+  'minimatch@>=9 <11': '^11.0.1'
 
 allowBuilds:
   '@parcel/watcher': false
