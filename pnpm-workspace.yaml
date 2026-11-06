@@ -10,7 +10,7 @@ overrides:
   qs: '^6.16.1'
   lodash: '^4.18.1'
   follow-redirects: '^1.16.2'
-  'nanoid@<4': '^3.3.18'
+  'nanoid@<4': '^6.0.0'
 
 allowBuilds:
   '@parcel/watcher': false
