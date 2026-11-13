@@ -184,8 +184,8 @@ importers:
         specifier: ^3.3.5
         version: 3.3.7(supports-color@8.1.1)
       '@n8n/eslint-plugin-community-nodes':
-        specifier: ^0.39.0
-        version: 0.39.0(eslint@10.14.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
+        specifier: ^0.40.0
+        version: 0.40.0(eslint@10.14.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -823,8 +823,8 @@ packages:
   '@n8n/errors@0.6.0':
     resolution: {integrity: sha512-oVJ0lgRYJY6/aPOW2h37ea5T+nX7/wULRn5FymwYeaiYlsLdqwIQEtGwZrajpzxJB0Os74u4lSH3WWQgZCkgxQ==}
 
-  '@n8n/eslint-plugin-community-nodes@0.39.0':
-    resolution: {integrity: sha512-ptR0pz9oS4C8Pqh7oG+xIZEPsun9x1olP5KiTG2+5x8ajf2Nh96Al6xM/1h82UPVe/fdeEZMD9fTDPQfsKwxxg==}
+  '@n8n/eslint-plugin-community-nodes@0.40.0':
+    resolution: {integrity: sha512-tq+aICcDb/3VcExNV3ooiN68PDN4Z5WUlAhaxzcWJ2DH5CdFBzcmKfqarCZ/Xm0stNkUhSWgvst+W7jwKBEKwg==}
     peerDependencies:
       eslint: 9.29.0
       n8n-workflow: '>=2'
@@ -839,8 +839,8 @@ packages:
     resolution: {integrity: sha512-UGSxYXXVuOX0yL6HTLBStKYwLIa0+JmRKiSZSCMcM2s2Wax984KWT6XIA1TR/27i7yYpDk1MY14KsTPnuEp27A==}
     engines: {node: '>=20.15', pnpm: '>=9.5'}
 
-  '@n8n/utils@1.54.0':
-    resolution: {integrity: sha512-gXuk1x1CWme4p+q8d4tAvoOC2JmJzU2uJILcxBoGUgQqnSbHgOISTyqYtgUy5BJRyQvH0vhOnKA2HEx+WqcOoQ==}
+  '@n8n/utils@1.55.0':
+    resolution: {integrity: sha512-zSKRDl+gpiRjjhN+4+AL3xaXVEWlTN+qVSEhQLdYXFzfoYj8sP9qSsYZzCXkQgktQrkPmV75uX0sKJZ2CqMz1w==}
 
   '@n8n/workflow-sdk@0.9.0':
     resolution: {integrity: sha512-+/R3NqfWMsC+3BJPAzom+vB6lQX9fhKrCrLnz2oJTFun32Jd21nSrC4tSc8vqPs1hPtCMx/86wssIRxMb4+PNg==}
@@ -4943,9 +4943,9 @@ snapshots:
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.39.0(eslint@10.14.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
+  '@n8n/eslint-plugin-community-nodes@0.40.0(eslint@10.14.0(supports-color@8.1.1))(n8n-workflow@2.16.0)(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
-      '@n8n/utils': 1.54.0
+      '@n8n/utils': 1.55.0
       '@typescript-eslint/typescript-estree': 8.70.0(supports-color@8.1.1)(typescript@6.0.3)
       '@typescript-eslint/utils': 8.70.0(eslint@10.14.0(supports-color@8.1.1))(supports-color@8.1.1)(typescript@6.0.3)
       change-case: 5.4.4
@@ -4980,7 +4980,7 @@ snapshots:
       esprima-next: 5.8.4
       recast: 0.22.0
 
-  '@n8n/utils@1.54.0':
+  '@n8n/utils@1.55.0':
     dependencies:
       '@n8n/constants': 0.45.0
       jssha: 3.3.1
