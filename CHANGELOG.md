@@ -1,5 +1,37 @@
 # Changelog
 
+## [1.18.0](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.17.0...v1.18.0) (2026-11-19)
+
+
+### Features
+
+* **deps:** update dependency @types/node to v26 ([#230](https://github.com/Heey-Global/deep-ocr-n8n/issues/230)) ([a47cfe6](https://github.com/Heey-Global/deep-ocr-n8n/commit/a47cfe6512fd6c43439ec9759456668439a4e7b2))
+* **deps:** update dependency n8n-workflow to v3 ([#252](https://github.com/Heey-Global/deep-ocr-n8n/issues/252)) ([be756bb](https://github.com/Heey-Global/deep-ocr-n8n/commit/be756bba12647831c11a7eeadb5f6e23e7e70d64))
+* **deps:** update dependency nanoid@&lt;4 to v6 ([#240](https://github.com/Heey-Global/deep-ocr-n8n/issues/240)) ([ac74bc5](https://github.com/Heey-Global/deep-ocr-n8n/commit/ac74bc5549df6c539d3cbfc6644e6649a2bd0203))
+* **deps:** update dependency node to v26 ([#231](https://github.com/Heey-Global/deep-ocr-n8n/issues/231)) ([1705b35](https://github.com/Heey-Global/deep-ocr-n8n/commit/1705b35338ae466a90e52ebe1e69e9cb05622465))
+
+
+### Bug Fixes
+
+* **deps:** drop unused n8n-core and patch remaining dev advisories ([#241](https://github.com/Heey-Global/deep-ocr-n8n/issues/241)) ([d3894e9](https://github.com/Heey-Global/deep-ocr-n8n/commit/d3894e987826ace71334459e75afd5050e6ec18d))
+* **deps:** raise pnpm overrides to patched transitive versions ([#239](https://github.com/Heey-Global/deep-ocr-n8n/issues/239)) ([fe1be88](https://github.com/Heey-Global/deep-ocr-n8n/commit/fe1be88fce68b25da8d3143f3b89cf7e90190e30))
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.37.0 ([#228](https://github.com/Heey-Global/deep-ocr-n8n/issues/228)) ([753250b](https://github.com/Heey-Global/deep-ocr-n8n/commit/753250b579f90e8c753891fb27dd25bf3a994834))
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.38.0 ([#234](https://github.com/Heey-Global/deep-ocr-n8n/issues/234)) ([eb516d7](https://github.com/Heey-Global/deep-ocr-n8n/commit/eb516d7978ee3f9399c0a7e91c56c2b2e0358a31))
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.39.0 ([#243](https://github.com/Heey-Global/deep-ocr-n8n/issues/243)) ([fdb305e](https://github.com/Heey-Global/deep-ocr-n8n/commit/fdb305e4ac9680b0c8456ec1aa6d2c2c6158bde9))
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.40.0 ([#247](https://github.com/Heey-Global/deep-ocr-n8n/issues/247)) ([7e5a262](https://github.com/Heey-Global/deep-ocr-n8n/commit/7e5a262079ebf28d40a92b7e32c88e34811db9b4))
+* **deps:** update dependency eslint to v10.14.0 ([#236](https://github.com/Heey-Global/deep-ocr-n8n/issues/236)) ([0d68d2e](https://github.com/Heey-Global/deep-ocr-n8n/commit/0d68d2ef6cb38538298b8a0101dadb206b08e50d))
+* **deps:** update dependency eslint to v10.15.0 ([#250](https://github.com/Heey-Global/deep-ocr-n8n/issues/250)) ([f06aa48](https://github.com/Heey-Global/deep-ocr-n8n/commit/f06aa4861c41d38ebee42f38e4b62ec8ec58a083))
+* **deps:** update dependency n8n-workflow to ~2.48.0 ([#251](https://github.com/Heey-Global/deep-ocr-n8n/issues/251)) ([19525e0](https://github.com/Heey-Global/deep-ocr-n8n/commit/19525e079d2f229eb06992547fa422e8788944a3))
+* **deps:** update dependency prettier to v3.10.1 ([#248](https://github.com/Heey-Global/deep-ocr-n8n/issues/248)) ([93d20ce](https://github.com/Heey-Global/deep-ocr-n8n/commit/93d20ceaa7853bcf1a8ae37d817932d97ee16acd))
+* **deps:** update eslint to v8.72.1 ([#233](https://github.com/Heey-Global/deep-ocr-n8n/issues/233)) ([22b8f69](https://github.com/Heey-Global/deep-ocr-n8n/commit/22b8f69d1876417acd5a73ef3446f1364a702d60))
+* **deps:** update eslint to v8.72.2 ([#246](https://github.com/Heey-Global/deep-ocr-n8n/issues/246)) ([a72bcfc](https://github.com/Heey-Global/deep-ocr-n8n/commit/a72bcfc5da3c4da990dc54c9c1da0a35cc4142ff))
+* **deps:** update pnpm to v12.15.0 ([#229](https://github.com/Heey-Global/deep-ocr-n8n/issues/229)) ([f8f97b8](https://github.com/Heey-Global/deep-ocr-n8n/commit/f8f97b8e28a417d2547b799b1d8f2541756fe3a1))
+* **deps:** update pnpm to v12.16.1 ([#229](https://github.com/Heey-Global/deep-ocr-n8n/issues/229)) ([fb02e44](https://github.com/Heey-Global/deep-ocr-n8n/commit/fb02e44f5e25a8275322d546455ea9d48f1b683a))
+* **deps:** update pnpm to v12.17.0 ([#242](https://github.com/Heey-Global/deep-ocr-n8n/issues/242)) ([8e164ae](https://github.com/Heey-Global/deep-ocr-n8n/commit/8e164ae5a3a69cabb28af50ad2fbf42ea25fa446))
+* **deps:** update pnpm to v12.18.0 ([#244](https://github.com/Heey-Global/deep-ocr-n8n/issues/244)) ([4546e3a](https://github.com/Heey-Global/deep-ocr-n8n/commit/4546e3a89139d296a10804e580d6e58b1fe5db6c))
+* **deps:** update pnpm to v12.21.0 ([#249](https://github.com/Heey-Global/deep-ocr-n8n/issues/249)) ([c9779ca](https://github.com/Heey-Global/deep-ocr-n8n/commit/c9779ca652b6cac585fac59e74aa3e2f1e9f29c4))
+* **devcontainer:** drop project-declared Features ([#235](https://github.com/Heey-Global/deep-ocr-n8n/issues/235)) ([5007aa0](https://github.com/Heey-Global/deep-ocr-n8n/commit/5007aa0eb8e5f85109c49b43f14a67bbc24aab65))
+
 ## [1.17.0](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.16.3...v1.17.0) (2026-10-22)
 
 
