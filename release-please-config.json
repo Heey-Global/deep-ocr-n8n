@@ -3,7 +3,7 @@
   "packages": {
     ".": {
       "release-type": "node",
-      "package-name": "n8n-nodes-deep-ocr",
+      "package-name": "n8n-nodes-heey-ocr",
       "include-component-in-tag": false,
       "changelog-path": "CHANGELOG.md"
     }

@@ -1,27 +1,27 @@
-import { DeepOcrApi } from '../../src/credentials/DeepOcrApi.credentials';
+import { HeeyOcrApi } from '../../src/credentials/HeeyOcrApi.credentials';
 
-describe('DeepOcrApi Credentials', () => {
-  let credentials: DeepOcrApi;
+describe('HeeyOcrApi Credentials', () => {
+  let credentials: HeeyOcrApi;
 
   beforeEach(() => {
-    credentials = new DeepOcrApi();
+    credentials = new HeeyOcrApi();
   });
 
   describe('credential properties', () => {
     it('should have correct name', () => {
-      expect(credentials.name).toBe('deepOcrApi');
+      expect(credentials.name).toBe('heeyOcrApi');
     });
 
     it('should have correct display name', () => {
-      expect(credentials.displayName).toBe('Deep-OCR API');
+      expect(credentials.displayName).toBe('Heey OCR API');
     });
 
     it('should have documentation URL', () => {
-      expect(credentials.documentationUrl).toBe('https://deep-ocr.com');
+      expect(credentials.documentationUrl).toBe('https://heey-ocr.com');
     });
 
     it('should have correct icon', () => {
-      expect(credentials.icon).toBe('file:../nodes/DeepOcr/deepocr.svg');
+      expect(credentials.icon).toBe('file:../nodes/HeeyOcr/deepocr.svg');
     });
 
     it('should have apiKey property', () => {

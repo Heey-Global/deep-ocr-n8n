@@ -41,7 +41,7 @@ exports.ALLOWED_MIME_TYPES = [
 function createFileTypeError(node, mimeType, itemIndex) {
     return new n8n_workflow_1.NodeOperationError(node, `Unsupported file type: ${mimeType}. Supported types: PDF, PNG, JPG, JPEG, WebP, TIFF`, {
         itemIndex,
-        description: `The file has MIME type "${mimeType}" which is not supported by the Deep-OCR API.`,
+        description: `The file has MIME type "${mimeType}" which is not supported by the Heey OCR API.`,
     });
 }
 /**
@@ -112,7 +112,7 @@ function wrapUnknownError(node, error, itemIndex) {
     }
     const message = error instanceof Error ? error.message : 'Unknown error';
     return new n8n_workflow_1.NodeApiError(node, { message }, {
-        message: 'Failed to process document with Deep-OCR API',
+        message: 'Failed to process document with Heey OCR API',
         itemIndex,
     });
 }

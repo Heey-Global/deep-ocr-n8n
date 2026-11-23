@@ -1,5 +1,5 @@
 {
-  "node": "n8n-nodes-deep-ocr.deepOcr",
+  "node": "n8n-nodes-heey-ocr.heeyOcr",
   "nodeVersion": "1.0",
   "codexVersion": "1.0",
   "categories": ["Utility", "Productivity"],
@@ -7,7 +7,7 @@
   "resources": {
     "primaryDocumentation": [
       {
-        "url": "https://deep-ocr.com"
+        "url": "https://heey-ocr.com"
       }
     ]
   }

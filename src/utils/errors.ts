@@ -44,7 +44,7 @@ export function createFileTypeError(
     `Unsupported file type: ${mimeType}. Supported types: PDF, PNG, JPG, JPEG, WebP, TIFF`,
     {
       itemIndex,
-      description: `The file has MIME type "${mimeType}" which is not supported by the Deep-OCR API.`,
+      description: `The file has MIME type "${mimeType}" which is not supported by the Heey OCR API.`,
     },
   );
 }
@@ -133,7 +133,7 @@ export function wrapUnknownError(
   }
   const message = error instanceof Error ? error.message : 'Unknown error';
   return new NodeApiError(node, { message }, {
-    message: 'Failed to process document with Deep-OCR API',
+    message: 'Failed to process document with Heey OCR API',
     itemIndex,
   });
 }

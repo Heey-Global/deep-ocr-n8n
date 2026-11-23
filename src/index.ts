@@ -1,12 +1,12 @@
 /**
- * n8n-nodes-deep-ocr
+ * n8n-nodes-heey-ocr
  *
- * Entry point for the Deep-OCR n8n community node package.
+ * Entry point for the Heey OCR n8n community node package.
  * Exports the node and credentials for n8n to discover.
  */
 
 // Node exports
-export { DeepOcr } from './nodes/DeepOcr/DeepOcr.node';
+export { HeeyOcr } from './nodes/HeeyOcr/HeeyOcr.node';
 
 // Credential exports
-export { DeepOcrApi } from './credentials/DeepOcrApi.credentials';
+export { HeeyOcrApi } from './credentials/HeeyOcrApi.credentials';

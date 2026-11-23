@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeepOcrApi = void 0;
+exports.HeeyOcrApi = void 0;
 /**
- * Deep-OCR API Credentials
+ * Heey OCR API Credentials
  *
- * Manages authentication with the Deep-OCR API using Bearer token.
+ * Manages authentication with the Heey OCR API using Bearer token.
  * The API key is stored securely and sent in the Authorization header.
  */
-class DeepOcrApi {
-    name = 'deepOcrApi';
-    displayName = 'Deep-OCR API';
-    icon = 'file:../nodes/DeepOcr/deepocr.svg';
-    documentationUrl = 'https://deep-ocr.com';
+class HeeyOcrApi {
+    name = 'heeyOcrApi';
+    displayName = 'Heey OCR API';
+    icon = 'file:../nodes/HeeyOcr/deepocr.svg';
+    documentationUrl = 'https://heey-ocr.com';
     properties = [
         {
             displayName: 'API Key',
@@ -22,7 +22,7 @@ class DeepOcrApi {
             },
             default: '',
             required: true,
-            description: 'The API key for authenticating with Deep-OCR service',
+            description: 'The API key for authenticating with Heey OCR service',
         },
     ];
     authenticate = {
@@ -41,5 +41,5 @@ class DeepOcrApi {
         },
     };
 }
-exports.DeepOcrApi = DeepOcrApi;
-//# sourceMappingURL=DeepOcrApi.credentials.js.map
+exports.HeeyOcrApi = HeeyOcrApi;
+//# sourceMappingURL=HeeyOcrApi.credentials.js.map
