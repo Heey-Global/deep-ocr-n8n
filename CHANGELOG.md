@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.18.0...v2.0.0) (2026-11-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* **n8n:** rename the package to Heey OCR ([#257](https://github.com/Heey-Global/deep-ocr-n8n/issues/257))
+
+### Features
+
+* **n8n:** rename the package to Heey OCR ([#257](https://github.com/Heey-Global/deep-ocr-n8n/issues/257)) ([db8b031](https://github.com/Heey-Global/deep-ocr-n8n/commit/db8b031db8d1a1f920bee05118dd578a4bdc6e8b))
+
+
+### Bug Fixes
+
+* **deps:** update eslint to v8.73.0 ([#253](https://github.com/Heey-Global/deep-ocr-n8n/issues/253)) ([76d2510](https://github.com/Heey-Global/deep-ocr-n8n/commit/76d2510c74cdbbda727276937b4ff8712188e687))
+
 ## [1.18.0](https://github.com/Heey-Global/deep-ocr-n8n/compare/v1.17.0...v1.18.0) (2026-11-19)
 
 
