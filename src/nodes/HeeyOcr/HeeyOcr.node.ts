@@ -21,7 +21,7 @@ import {
 import { version as PACKAGE_VERSION } from '../../../package.json';
 
 /** Heey OCR API base URL */
-const API_BASE = 'https://api.deep-ocr.com';
+const API_BASE = 'https://api.heey-ocr.com';
 /** POST a new extraction job */
 const EXTRACTIONS_URL = `${API_BASE}/v1/extractions`;
 /**

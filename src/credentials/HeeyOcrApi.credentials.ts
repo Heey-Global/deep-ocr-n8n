@@ -42,7 +42,7 @@ export class HeeyOcrApi implements ICredentialType {
 
   test: ICredentialTestRequest = {
     request: {
-      baseURL: 'https://api.deep-ocr.com',
+      baseURL: 'https://api.heey-ocr.com',
       url: '/health',
       method: 'GET',
     },
