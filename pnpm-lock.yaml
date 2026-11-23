@@ -196,7 +196,7 @@ importers:
         version: 3.3.7(supports-color@8.1.1)
       '@n8n/eslint-plugin-community-nodes':
         specifier: ^0.40.0
-        version: 0.40.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.2.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)
+        version: 0.40.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -228,8 +228,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.2(@jest/globals@30.5.2(supports-color@8.1.1))(jest@30.5.2(@types/node@26.6.6)(supports-color@8.1.1))(typescript@6.0.3)
       n8n-workflow:
-        specifier: ~3.2.0
-        version: 3.2.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
+        specifier: ~3.3.0
+        version: 3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
       prettier:
         specifier: ^3.8.0
         version: 3.10.1
@@ -627,15 +627,6 @@ packages:
   '@jitl/quickjs-ffi-types@0.32.0':
     resolution: {integrity: sha512-v9T+GQpmk43VDJ7d72sf0Nexhk+ArvtUihW27dy7lqAl0zBObFKtSBBIm5RBjwIhE8VwsPPm9PNuvPvNqLWUEg==}
 
-  '@jitl/quickjs-wasmfile-debug-asyncify@0.32.0':
-    resolution: {integrity: sha512-EX8zbXwGqCgAE764M+qvkHtyXDi/FUoMBea0JnES7vCM3P7a2+EOZOjGv85wtZ2sJhI1oJ+nekmqpOODFDY+hw==}
-
-  '@jitl/quickjs-wasmfile-debug-sync@0.32.0':
-    resolution: {integrity: sha512-LeYWrPGC1uNCTBWvibo3ZLJj0CSVNYUXvJpXMCmuQ5Sap2cCACc3uvGvYV4homHHBAzfw5akoTqMMS4YFRtw+Q==}
-
-  '@jitl/quickjs-wasmfile-release-asyncify@0.32.0':
-    resolution: {integrity: sha512-3oSwPfja12ICz4aIblB58cuY8JlEq5Txt8Cut4VLo+LH47QN+mzCnSgnbB03hWzg1LBcc+VyyI9UOag7a1NF+Q==}
-
   '@jitl/quickjs-wasmfile-release-sync@0.32.0':
     resolution: {integrity: sha512-BKNDI/TPBfGlLNGYpLrhcDGXmIk4xHm4MRAisOBnOzpXVn9HZWsfmMAc9WMBrAHjvvds6HOikKeaOBKdPdpVrg==}
 
@@ -679,11 +670,11 @@ packages:
   '@n8n/constants@0.45.0':
     resolution: {integrity: sha512-osCoqBCMelr1sqHuB3gyDCaK90lhDcumP6GFbS7iiagZfYRhojNmOTCVy0O49jExwDQ5Qr0ftQOsSioghG0Aag==}
 
-  '@n8n/constants@1.2.1':
-    resolution: {integrity: sha512-VtCwvMOsq6KLyhhUWK8yK+7VkGzEnszUmwDd6Su7qe7J1s328WbYPER7MT6kMnfWohdFa5PoDPKl1K0X6jWs5A==}
+  '@n8n/constants@1.3.0':
+    resolution: {integrity: sha512-7psvyK63CzfLFQyoW3Fy92lHtJCzH4wq3JKJk2qY6mZW5B5607G8StF0L9llcPyenWirwUUscNarX/6ae1HMSw==}
 
-  '@n8n/errors@1.2.0':
-    resolution: {integrity: sha512-VRJMnytFY8mnp3DLmw4LtNPgQYtPhjQ8lewVnzS06RF7tJpFfbmWiwYCLwZY6VvOEa7NDIjFkhCcKkSNd+u5jg==}
+  '@n8n/errors@1.3.0':
+    resolution: {integrity: sha512-CVLVTiRw+GDMHkf5ut6w/srX9g1/9W6R6QP8zW9zW0ptvY7RqEBIrJmxgYzTkFlfJWauye6PWhJmHtORfCgP1g==}
 
   '@n8n/eslint-plugin-community-nodes@0.40.0':
     resolution: {integrity: sha512-tq+aICcDb/3VcExNV3ooiN68PDN4Z5WUlAhaxzcWJ2DH5CdFBzcmKfqarCZ/Xm0stNkUhSWgvst+W7jwKBEKwg==}
@@ -691,17 +682,17 @@ packages:
       eslint: 9.29.0
       n8n-workflow: '>=2'
 
-  '@n8n/expression-runtime@1.2.1':
-    resolution: {integrity: sha512-5QqIwkFS+K1TCnsTHDLQPWoJUb7ySi7hklY9fO/UR3qxGUjgz5AqEiOEovZ3J0H66FbL8vBnk4ivf21oTJXN8w==}
+  '@n8n/expression-runtime@1.3.0':
+    resolution: {integrity: sha512-o+izqvg2NWoUr+p20e/6094J9FmH/CRoq4hqC2tEYbiYNoQu4NuznJK7LTcs8d8z2tDdpsw56PhfaRYkAoGyWg==}
 
-  '@n8n/tournament@2.2.0':
-    resolution: {integrity: sha512-IhOr/XorNcdrDaio1hiAxCJnLgKBLnArOqDD6+zCRf2bJ4q0Z52UYnclsX0iorHMz1XVspgepOGGy+ehiC3lwg==}
+  '@n8n/tournament@2.3.0':
+    resolution: {integrity: sha512-5yn2MUNWybK0T9Xsx848ntdj/RoHO19/XrrBkJG0dfSO441h4EIzjdIJIWS9cZguJbLorxHhewZM45XbDBaXYQ==}
 
   '@n8n/utils@1.55.0':
     resolution: {integrity: sha512-zSKRDl+gpiRjjhN+4+AL3xaXVEWlTN+qVSEhQLdYXFzfoYj8sP9qSsYZzCXkQgktQrkPmV75uX0sKJZ2CqMz1w==}
 
-  '@n8n/utils@2.2.1':
-    resolution: {integrity: sha512-Ca3g1fPH1oKzG9FSSZslmAP/Duvej614e/8JEnEcyt6mGvrwMpffShMBLTNCZdPWMyYI9akd5agSe34USvnKLA==}
+  '@n8n/utils@2.3.0':
+    resolution: {integrity: sha512-QKqjwqqmAxtEBmDqL3iwLypqp2fhtQ+c/cxPVSUtRbAq82M10fbC90i2ZiNGrjGymHj4XusrmpSQgkTdb7jzWA==}
 
   '@napi-rs/wasm-runtime@1.2.4':
     resolution: {integrity: sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g==}
@@ -2345,8 +2336,8 @@ packages:
     resolution: {integrity: sha512-32GSKM3Wyc8dg/p39lWPKYu8zci9mJFzV1Np9Of0ZEpe6Fhssn/FbI7ywAMd40uX+p3ZKh3T5EeCFv81qS3HmQ==}
     engines: {node: '>= 10.13.0'}
 
-  n8n-workflow@3.2.1:
-    resolution: {integrity: sha512-VXFsidnXTArOlrhOqWPsgEP6AzymDRqbVSDjfgf8vRsNdUyRpEI5evkVxl5Ndzz6oPAjpFGUo+j55ytmsq41IA==}
+  n8n-workflow@3.3.0:
+    resolution: {integrity: sha512-4PVjTlbxismoWIvUUWT6dqICFimyemQyfU8us+vFLSk3BwUXGJR2xza0oua5V/JpoUed4Q+pmg5q6yOYnq4r3Q==}
     peerDependencies:
       zod: 3.25.76
 
@@ -2556,10 +2547,6 @@ packages:
 
   quickjs-emscripten-core@0.32.0:
     resolution: {integrity: sha512-QFnPfjFey8EqknSrSxe1hZrf1/8z7/6s1QzGOmKo6++02r7QRRX7ZoyNaZh7JuVjWsVW87KnQrbZqnHkOAzUyg==}
-
-  quickjs-emscripten@0.32.0:
-    resolution: {integrity: sha512-So0Sqw869y/S2oE3Nuc0uT3Dhqgvsj8FSrwBdsuTosVsG8ME5/OcudU1GxsrIFdFABgy17GHnTVO9TYV/bLQcA==}
-    engines: {node: '>=16.0.0'}
 
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
@@ -3552,18 +3539,6 @@ snapshots:
 
   '@jitl/quickjs-ffi-types@0.32.0': {}
 
-  '@jitl/quickjs-wasmfile-debug-asyncify@0.32.0':
-    dependencies:
-      '@jitl/quickjs-ffi-types': 0.32.0
-
-  '@jitl/quickjs-wasmfile-debug-sync@0.32.0':
-    dependencies:
-      '@jitl/quickjs-ffi-types': 0.32.0
-
-  '@jitl/quickjs-wasmfile-release-asyncify@0.32.0':
-    dependencies:
-      '@jitl/quickjs-ffi-types': 0.32.0
-
   '@jitl/quickjs-wasmfile-release-sync@0.32.0':
     dependencies:
       '@jitl/quickjs-ffi-types': 0.32.0
@@ -3609,13 +3584,13 @@ snapshots:
 
   '@n8n/constants@0.45.0': {}
 
-  '@n8n/constants@1.2.1': {}
+  '@n8n/constants@1.3.0': {}
 
-  '@n8n/errors@1.2.0':
+  '@n8n/errors@1.3.0':
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.40.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.2.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)':
+  '@n8n/eslint-plugin-community-nodes@0.40.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@n8n/utils': 1.55.0
       '@typescript-eslint/typescript-estree': 8.70.0(supports-color@8.1.1)(typescript@6.0.3)
@@ -3623,17 +3598,18 @@ snapshots:
       change-case: 5.4.4
       eslint: 10.15.0(supports-color@8.1.1)
       fastest-levenshtein: 1.0.16
-      n8n-workflow: 3.2.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
+      n8n-workflow: 3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
       pluralize: 8.0.0
     transitivePeerDependencies:
       - supports-color
       - typescript
 
-  '@n8n/expression-runtime@1.2.1':
+  '@n8n/expression-runtime@1.3.0':
     dependencies:
-      '@n8n/errors': 1.2.0
-      '@n8n/tournament': 2.2.0
-      '@n8n/utils': 2.2.1
+      '@jitl/quickjs-wasmfile-release-sync': 0.32.0
+      '@n8n/errors': 1.3.0
+      '@n8n/tournament': 2.3.0
+      '@n8n/utils': 2.3.0
       isolated-vm: 7.0.2
       jmespath: 0.16.0
       js-base64: 3.7.8
@@ -3641,12 +3617,12 @@ snapshots:
       lodash: 4.18.1
       luxon: 3.7.2
       md5: 2.3.0
-      quickjs-emscripten: 0.32.0
+      quickjs-emscripten-core: 0.32.0
       title-case: 3.0.3
       transliteration: 2.3.5
       zod: 3.25.76
 
-  '@n8n/tournament@2.2.0':
+  '@n8n/tournament@2.3.0':
     dependencies:
       ast-types: 0.16.1
       esprima-next: 5.8.4
@@ -3659,9 +3635,9 @@ snapshots:
       nanoid: 6.0.2
       semver: 7.7.3
 
-  '@n8n/utils@2.2.1':
+  '@n8n/utils@2.3.0':
     dependencies:
-      '@n8n/constants': 1.2.1
+      '@n8n/constants': 1.3.0
       jssha: 3.3.1
       nanoid: 6.0.2
       semver: 7.7.3
@@ -5540,14 +5516,14 @@ snapshots:
 
   mute-stdout@2.0.0: {}
 
-  n8n-workflow@3.2.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76):
+  n8n-workflow@3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76):
     dependencies:
       '@codemirror/autocomplete': 6.20.0
-      '@n8n/constants': 1.2.1
-      '@n8n/errors': 1.2.0
-      '@n8n/expression-runtime': 1.2.1
-      '@n8n/tournament': 2.2.0
-      '@n8n/utils': 2.2.1
+      '@n8n/constants': 1.3.0
+      '@n8n/errors': 1.3.0
+      '@n8n/expression-runtime': 1.3.0
+      '@n8n/tournament': 2.3.0
+      '@n8n/utils': 2.3.0
       ast-types: 0.16.1
       axios: 1.21.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       esprima-next: 5.8.4
@@ -5757,14 +5733,6 @@ snapshots:
   quickjs-emscripten-core@0.32.0:
     dependencies:
       '@jitl/quickjs-ffi-types': 0.32.0
-
-  quickjs-emscripten@0.32.0:
-    dependencies:
-      '@jitl/quickjs-wasmfile-debug-asyncify': 0.32.0
-      '@jitl/quickjs-wasmfile-debug-sync': 0.32.0
-      '@jitl/quickjs-wasmfile-release-asyncify': 0.32.0
-      '@jitl/quickjs-wasmfile-release-sync': 0.32.0
-      quickjs-emscripten-core: 0.32.0
 
   react-is@18.3.1: {}
 
