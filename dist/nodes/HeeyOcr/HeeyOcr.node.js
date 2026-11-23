@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeepOcr = void 0;
+exports.HeeyOcr = void 0;
 const n8n_workflow_1 = require("n8n-workflow");
 const errors_1 = require("../../utils/errors");
 // Single source of truth for the published version — keeps the client
 // identifier strings in lockstep with release-please bumps without a
 // hardcoded version literal anywhere.
 const package_json_1 = require("../../../package.json");
-/** Deep-OCR API base URL */
+/** Heey OCR API base URL */
 const API_BASE = 'https://api.deep-ocr.com';
 /** POST a new extraction job */
 const EXTRACTIONS_URL = `${API_BASE}/v1/extractions`;
@@ -107,30 +107,30 @@ const ALLOWED_DOCUMENT_TYPES = [
     'receipt',
 ];
 /**
- * Deep-OCR Node
+ * Heey OCR Node
  *
  * AI-powered OCR for invoices, receipts, contracts, IDs, bank statements
  * and more — returns structured JSON ready to use.
  * Supports PDF, PNG, JPG, JPEG, WebP, and TIFF formats up to 100MB.
  */
-class DeepOcr {
+class HeeyOcr {
     description = {
-        displayName: 'Deep-OCR',
-        name: 'deepOcr',
+        displayName: 'Heey OCR',
+        name: 'heeyOcr',
         icon: 'file:deepocr.svg',
         group: ['transform'],
         version: 1,
         subtitle: '={{$parameter["documentType"]}}',
         description: 'AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use',
         defaults: {
-            name: 'Deep-OCR',
+            name: 'Heey OCR',
         },
         inputs: [n8n_workflow_1.NodeConnectionTypes.Main],
         outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
         usableAsTool: true,
         credentials: [
             {
-                name: 'deepOcrApi',
+                name: 'heeyOcrApi',
                 required: true,
             },
         ],
@@ -263,7 +263,7 @@ class DeepOcr {
                 form.append('file', new Blob([new Uint8Array(buffer)], { type: binaryData.mimeType }), safeFilename);
                 form.append('document_type', documentType);
                 // Step 1: POST → 202 + Extraction { id, … }
-                const submitResponse = await this.helpers.httpRequestWithAuthentication.call(this, 'deepOcrApi', {
+                const submitResponse = await this.helpers.httpRequestWithAuthentication.call(this, 'heeyOcrApi', {
                     method: 'POST',
                     url: EXTRACTIONS_URL,
                     body: form,
@@ -271,12 +271,12 @@ class DeepOcr {
                     headers: { ...CLIENT_HEADERS },
                 });
                 if (!isPlainObject(submitResponse)) {
-                    throw new n8n_workflow_1.NodeApiError(this.getNode(), { message: 'Unexpected response format from Deep-OCR API (expected 202 + Extraction)' }, { itemIndex });
+                    throw new n8n_workflow_1.NodeApiError(this.getNode(), { message: 'Unexpected response format from Heey OCR API (expected 202 + Extraction)' }, { itemIndex });
                 }
                 const submitted = submitResponse;
                 const jobId = typeof submitted.id === 'string' ? submitted.id : undefined;
                 if (typeof jobId !== 'string' || jobId.length === 0) {
-                    throw new n8n_workflow_1.NodeApiError(this.getNode(), { message: 'Deep-OCR API did not return an extraction id' }, { itemIndex });
+                    throw new n8n_workflow_1.NodeApiError(this.getNode(), { message: 'Heey OCR API did not return an extraction id' }, { itemIndex });
                 }
                 // Step 2: poll GET /v1/extractions/{id} until terminal — honour the
                 // server's Retry-After header (seconds) when present, otherwise fall
@@ -290,7 +290,7 @@ class DeepOcr {
                 let pollDelay = POLL_INITIAL_MS;
                 let polled;
                 while (true) {
-                    const pollResponse = await this.helpers.httpRequestWithAuthentication.call(this, 'deepOcrApi', {
+                    const pollResponse = await this.helpers.httpRequestWithAuthentication.call(this, 'heeyOcrApi', {
                         method: 'GET',
                         url: extractionUrl(jobId),
                         returnFullResponse: true,
@@ -304,7 +304,7 @@ class DeepOcr {
                         !('body' in pollResponse) ||
                         !('headers' in pollResponse)) {
                         throw new n8n_workflow_1.NodeApiError(this.getNode(), {
-                            message: `Deep-OCR poll response for extraction ${jobId} is missing the body/headers wrapper (expected returnFullResponse output)`,
+                            message: `Heey OCR poll response for extraction ${jobId} is missing the body/headers wrapper (expected returnFullResponse output)`,
                         }, { itemIndex });
                     }
                     const pollRaw = pollResponse.body;
@@ -319,7 +319,7 @@ class DeepOcr {
                     }
                     if (Date.now() - startedAt > POLL_TIMEOUT_MS) {
                         throw new n8n_workflow_1.NodeApiError(this.getNode(), {
-                            message: `Deep-OCR extraction ${jobId} did not reach a terminal state within ${POLL_TIMEOUT_MS / 1000}s (last status: ${typeof status === 'string' ? status : 'unknown'})`,
+                            message: `Heey OCR extraction ${jobId} did not reach a terminal state within ${POLL_TIMEOUT_MS / 1000}s (last status: ${typeof status === 'string' ? status : 'unknown'})`,
                         }, { itemIndex });
                     }
                     if (retryAfterMs !== undefined) {
@@ -341,7 +341,7 @@ class DeepOcr {
                     const code = typeof err.code === 'string' && err.code.length > 0 ? err.code : 'failed';
                     const message = typeof err.message === 'string' && err.message.length > 0
                         ? err.message
-                        : `Deep-OCR extraction ${jobId} failed`;
+                        : `Heey OCR extraction ${jobId} failed`;
                     throw new n8n_workflow_1.NodeApiError(this.getNode(), { message: `[${code}] ${message}` }, { itemIndex });
                 }
                 // status === 'completed' — unwrap $.result (defensive: tolerate missing fields)
@@ -371,5 +371,5 @@ class DeepOcr {
         return [returnData];
     }
 }
-exports.DeepOcr = DeepOcr;
-//# sourceMappingURL=DeepOcr.node.js.map
+exports.HeeyOcr = HeeyOcr;
+//# sourceMappingURL=HeeyOcr.node.js.map

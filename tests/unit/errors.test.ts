@@ -16,8 +16,8 @@ import type { INode } from 'n8n-workflow';
 // Mock node for testing error creation functions
 const mockNode: INode = {
   id: 'test-node-id',
-  name: 'Deep-OCR',
-  type: 'n8n-nodes-deep-ocr.deepOcr',
+  name: 'Heey OCR',
+  type: 'n8n-nodes-heey-ocr.heeyOcr',
   typeVersion: 1,
   position: [0, 0],
   parameters: {},
@@ -182,12 +182,12 @@ describe('Error Utilities', () => {
     it('should wrap Error instances in NodeApiError', () => {
       const original = new Error('network timeout');
       const wrapped = wrapUnknownError(mockNode, original, 0);
-      expect(wrapped.message).toContain('Failed to process document with Deep-OCR API');
+      expect(wrapped.message).toContain('Failed to process document with Heey OCR API');
     });
 
     it('should wrap non-Error values in NodeApiError', () => {
       const wrapped = wrapUnknownError(mockNode, 'string error', 0);
-      expect(wrapped.message).toContain('Failed to process document with Deep-OCR API');
+      expect(wrapped.message).toContain('Failed to process document with Heey OCR API');
     });
 
     it('should include itemIndex in error context', () => {

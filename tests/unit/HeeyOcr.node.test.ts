@@ -1,4 +1,4 @@
-import { DeepOcr } from '../../src/nodes/DeepOcr/DeepOcr.node';
+import { HeeyOcr } from '../../src/nodes/HeeyOcr/HeeyOcr.node';
 import type { IExecuteFunctions, INodeExecutionData } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
 import { mockDeep } from 'jest-mock-extended';
@@ -40,20 +40,20 @@ const pollResp = (
   headers: Record<string, string | number> = {},
 ): { body: unknown; headers: Record<string, string | number> } => ({ body, headers });
 
-describe('DeepOcr Node', () => {
-  let node: DeepOcr;
+describe('HeeyOcr Node', () => {
+  let node: HeeyOcr;
 
   beforeEach(() => {
-    node = new DeepOcr();
+    node = new HeeyOcr();
   });
 
   describe('node description', () => {
     it('should have correct display name', () => {
-      expect(node.description.displayName).toBe('Deep-OCR');
+      expect(node.description.displayName).toBe('Heey OCR');
     });
 
     it('should have correct internal name', () => {
-      expect(node.description.name).toBe('deepOcr');
+      expect(node.description.name).toBe('heeyOcr');
     });
 
     it('should have correct icon', () => {
@@ -76,9 +76,9 @@ describe('DeepOcr Node', () => {
       expect(node.description.outputs).toEqual(['main']);
     });
 
-    it('should require deepOcrApi credentials', () => {
+    it('should require heeyOcrApi credentials', () => {
       const credentialConfig = node.description.credentials?.find(
-        (c) => c.name === 'deepOcrApi',
+        (c) => c.name === 'heeyOcrApi',
       );
       expect(credentialConfig).toBeDefined();
       expect(credentialConfig?.required).toBe(true);
@@ -245,7 +245,7 @@ describe('DeepOcr Node', () => {
       // Call 1: GET /v1/extractions/{id} with returnFullResponse so headers (Retry-After) are visible.
       expect(mockExecuteFunctions.helpers.httpRequestWithAuthentication).toHaveBeenNthCalledWith(
         2,
-        'deepOcrApi',
+        'heeyOcrApi',
         expect.objectContaining({
           method: 'GET',
           url: 'https://api.deep-ocr.com/v1/extractions/ext_receipt_1',
@@ -304,7 +304,7 @@ describe('DeepOcr Node', () => {
         fileName: 'test.txt',
       });
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow('Unsupported file type');
     });
@@ -348,7 +348,7 @@ describe('DeepOcr Node', () => {
       });
       (mockExecuteFunctions.helpers.getBinaryDataBuffer as jest.Mock).mockResolvedValue(largeBuffer);
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow('exceeds maximum allowed size');
     });
@@ -409,7 +409,7 @@ describe('DeepOcr Node', () => {
         .mockReturnValueOnce('data')
         .mockReturnValueOnce('malicious_type');
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow(
         'Invalid document type: "malicious_type"',
@@ -458,10 +458,10 @@ describe('DeepOcr Node', () => {
       (mockExecuteFunctions.helpers.getBinaryDataBuffer as jest.Mock).mockResolvedValue(binaryBuffer);
       (mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock).mockResolvedValue('not an object');
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow(
-        'Unexpected response format from Deep-OCR API',
+        'Unexpected response format from Heey OCR API',
       );
     });
 
@@ -478,7 +478,7 @@ describe('DeepOcr Node', () => {
         fileSize: String(200 * 1024 * 1024), // 200MB in metadata — comfortably above the 100MB limit
       });
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow('exceeds maximum allowed size');
       // Buffer should never have been loaded
@@ -521,7 +521,7 @@ describe('DeepOcr Node', () => {
         fileName: 'test.txt',
       });
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(true);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       const result = await node.execute.call(mockExecuteFunctions);
 
@@ -547,10 +547,10 @@ describe('DeepOcr Node', () => {
       (mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock)
         .mockRejectedValue(new TypeError('Unexpected network failure'));
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow(
-        'Failed to process document with Deep-OCR API',
+        'Failed to process document with Heey OCR API',
       );
     });
 
@@ -558,7 +558,7 @@ describe('DeepOcr Node', () => {
       const inputItems: INodeExecutionData[] = [{ json: {} }];
       const binaryBuffer = Buffer.from('test pdf content');
       const originalError = new NodeApiError(
-        { name: 'Deep-OCR' } as never,
+        { name: 'Heey OCR' } as never,
         { message: 'API rate limit exceeded' },
       );
 
@@ -574,7 +574,7 @@ describe('DeepOcr Node', () => {
       (mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock)
         .mockRejectedValue(originalError);
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toBe(originalError);
     });
@@ -595,7 +595,7 @@ describe('DeepOcr Node', () => {
       (mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock)
         .mockRejectedValue(new Error('ECONNREFUSED: connection refused'));
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(true);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       const result = await node.execute.call(mockExecuteFunctions);
 
@@ -635,7 +635,7 @@ describe('DeepOcr Node', () => {
 
       (mockExecuteFunctions.getInputData as jest.Mock).mockReturnValue(inputItems);
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(true);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       // Item 0: valid PDF → success
       // Item 1: invalid MIME type → error captured via continueOnFail
@@ -685,10 +685,10 @@ describe('DeepOcr Node', () => {
       (mockExecuteFunctions.helpers.getBinaryDataBuffer as jest.Mock)
         .mockRejectedValue(new Error('Failed to read binary data from storage'));
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow(
-        'Failed to process document with Deep-OCR API',
+        'Failed to process document with Heey OCR API',
       );
     });
   });
@@ -710,7 +710,7 @@ describe('DeepOcr Node', () => {
         Buffer.from('test pdf content'),
       );
       (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+      (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
     };
 
     beforeEach(() => {
@@ -739,7 +739,7 @@ describe('DeepOcr Node', () => {
           Buffer.from('test pdf content'),
         );
         (mockExecuteFunctions.continueOnFail as jest.Mock).mockReturnValue(false);
-        (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Deep-OCR' });
+        (mockExecuteFunctions.getNode as jest.Mock).mockReturnValue({ name: 'Heey OCR' });
         mockExtractionSuccess(
           mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock,
           { document_type: 'invoice', content: {}, metadata: {} },
@@ -835,7 +835,7 @@ describe('DeepOcr Node', () => {
         .mockResolvedValueOnce(pollResp({ status: 'failed' }));
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow(
-        '[failed] Deep-OCR extraction ext_fail_bare failed',
+        '[failed] Heey OCR extraction ext_fail_bare failed',
       );
     });
 
@@ -866,7 +866,7 @@ describe('DeepOcr Node', () => {
       // Poll URL must reflect the id from the contract response
       expect(mockExecuteFunctions.helpers.httpRequestWithAuthentication).toHaveBeenNthCalledWith(
         2,
-        'deepOcrApi',
+        'heeyOcrApi',
         expect.objectContaining({
           method: 'GET',
           url: 'https://api.deep-ocr.com/v1/extractions/ext_2c6f0d8e_4ab1',
@@ -931,7 +931,7 @@ describe('DeepOcr Node', () => {
         );
 
       await expect(node.execute.call(mockExecuteFunctions)).rejects.toThrow(
-        '[BAD_PDF] Deep-OCR extraction ext_asym_1 failed',
+        '[BAD_PDF] Heey OCR extraction ext_asym_1 failed',
       );
     });
 

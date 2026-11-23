@@ -1,8 +1,8 @@
-# n8n-nodes-deep-ocr
+# Heey OCR for n8n
 
-N8N Community Node for the [Deep-OCR Service](https://deep-ocr.com) — AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use.
+N8N Community Node for the [Heey OCR Service](https://heey-ocr.com) — AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use.
 
-[![npm version](https://badge.fury.io/js/n8n-nodes-deep-ocr.svg)](https://www.npmjs.com/package/n8n-nodes-deep-ocr)
+[![npm version](https://badge.fury.io/js/n8n-nodes-heey-ocr.svg)](https://www.npmjs.com/package/n8n-nodes-heey-ocr)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 💡 What it does
@@ -51,27 +51,27 @@ Drop it into any workflow that needs accounting, expense tracking, KYC, or docum
 
 1. Go to **Settings** → **Community Nodes**
 2. Click **Install a community node**
-3. Enter `n8n-nodes-deep-ocr`
+3. Enter `n8n-nodes-heey-ocr`
 4. Click **Install**
 
 ### Manual Installation
 
 ```bash
-npm install n8n-nodes-deep-ocr
+npm install n8n-nodes-heey-ocr
 ```
 
 ## 🔧 Configuration
 
 ### Setting Up Credentials
 
-1. Get your API key from [Deep-OCR Dashboard](https://deep-ocr.com)
+1. Get your API key from [Heey OCR Dashboard](https://heey-ocr.com)
 2. In n8n, go to **Credentials** → **Add Credential**
-3. Search for "Deep-OCR API"
+3. Search for "Heey OCR API"
 4. Enter your API key and save
 
 ## 📖 Usage
 
-1. Add the **Deep-OCR** node to your workflow
+1. Add the **Heey OCR** node to your workflow
 2. Connect a node that provides binary data (e.g., Read Binary File, HTTP Request)
 3. Configure:
    - **Binary Property**: Name of the binary property containing your document (default: `data`)
@@ -149,7 +149,7 @@ npm install n8n-nodes-deep-ocr
     },
     {
       "name": "Extract Invoice Data",
-      "type": "n8n-nodes-deep-ocr.deepOcr",
+      "type": "n8n-nodes-heey-ocr.heeyOcr",
       "parameters": {
         "binaryPropertyName": "data",
         "documentType": "invoice"
@@ -175,17 +175,17 @@ npm install n8n-nodes-deep-ocr
 The node only accepts PDF, PNG, JPG, JPEG, WebP, and TIFF files. Make sure the upstream node sets the correct MIME type. If you're using **HTTP Request** to download a file, check that the response has a proper `Content-Type` header.
 
 ### "File size exceeds maximum allowed size"
-The Deep-OCR API accepts files up to **100MB**. For larger PDFs, consider compressing them first or splitting them into individual pages.
+The Heey OCR API accepts files up to **100MB**. For larger PDFs, consider compressing them first or splitting them into individual pages.
 
 ### "Connection tested successfully" but processing fails
-Your API key is valid, but the key may not have enough quota remaining. Check your usage in the [Deep-OCR Dashboard](https://deep-ocr.com).
+Your API key is valid, but the key may not have enough quota remaining. Check your usage in the [Heey OCR Dashboard](https://heey-ocr.com).
 
 ### Node not appearing in n8n's node picker
 In n8n 2.x, unverified community nodes are hidden from the picker search. Install the node via **Settings → Community Nodes**, then add it to your workflow by importing the following JSON snippet:
 
 ```json
 {
-  "type": "n8n-nodes-deep-ocr.deepOcr",
+  "type": "n8n-nodes-heey-ocr.heeyOcr",
   "parameters": { "binaryPropertyName": "data", "documentType": "invoice" }
 }
 ```
@@ -225,10 +225,10 @@ pnpm lint
 ```
 src/
 ├── credentials/
-│   └── DeepOcrApi.credentials.ts    # API key credential type
+│   └── HeeyOcrApi.credentials.ts    # API key credential type
 ├── nodes/
-│   └── DeepOcr/
-│       ├── DeepOcr.node.ts          # Main node implementation
+│   └── HeeyOcr/
+│       ├── HeeyOcr.node.ts          # Main node implementation
 │       └── deepocr.svg              # Node icon
 ├── utils/
 │   └── errors.ts                    # Error handling utilities
@@ -246,4 +246,4 @@ Contributions are welcome! Please submit pull requests to our [repository](https
 ## 📞 Support
 
 - [GitHub Issues](https://github.com/Heey-Global/deep-ocr-n8n/issues)
-- [Deep-OCR Documentation](https://deep-ocr.com)
+- [Heey OCR Documentation](https://heey-ocr.com)

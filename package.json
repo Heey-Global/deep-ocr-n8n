@@ -1,12 +1,12 @@
 {
-  "name": "n8n-nodes-deep-ocr",
+  "name": "n8n-nodes-heey-ocr",
   "version": "1.18.0",
-  "description": "AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use",
+  "description": "Heey OCR for n8n: AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use",
   "keywords": [
     "n8n-community-node-package",
     "n8n",
     "ocr",
-    "deep-ocr",
+    "heey-ocr",
     "document-processing",
     "text-extraction",
     "structured-data"
@@ -34,7 +34,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
-    "lint:n8n": "npx @n8n/scan-community-package n8n-nodes-deep-ocr",
+    "lint:n8n": "npx @n8n/scan-community-package n8n-nodes-heey-ocr",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -46,10 +46,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/DeepOcrApi.credentials.js"
+      "dist/credentials/HeeyOcrApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/DeepOcr/DeepOcr.node.js"
+      "dist/nodes/HeeyOcr/HeeyOcr.node.js"
     ]
   },
   "devDependencies": {

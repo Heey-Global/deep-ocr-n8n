@@ -20,7 +20,7 @@ import {
 // hardcoded version literal anywhere.
 import { version as PACKAGE_VERSION } from '../../../package.json';
 
-/** Deep-OCR API base URL */
+/** Heey OCR API base URL */
 const API_BASE = 'https://api.deep-ocr.com';
 /** POST a new extraction job */
 const EXTRACTIONS_URL = `${API_BASE}/v1/extractions`;
@@ -166,16 +166,16 @@ interface ExtractionPollResponse {
 }
 
 /**
- * Deep-OCR Node
+ * Heey OCR Node
  *
  * AI-powered OCR for invoices, receipts, contracts, IDs, bank statements
  * and more — returns structured JSON ready to use.
  * Supports PDF, PNG, JPG, JPEG, WebP, and TIFF formats up to 100MB.
  */
-export class DeepOcr implements INodeType {
+export class HeeyOcr implements INodeType {
   description: INodeTypeDescription = {
-    displayName: 'Deep-OCR',
-    name: 'deepOcr',
+    displayName: 'Heey OCR',
+    name: 'heeyOcr',
     icon: 'file:deepocr.svg',
     group: ['transform'],
     version: 1,
@@ -183,14 +183,14 @@ export class DeepOcr implements INodeType {
     description:
       'AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use',
     defaults: {
-      name: 'Deep-OCR',
+      name: 'Heey OCR',
     },
     inputs: [NodeConnectionTypes.Main],
     outputs: [NodeConnectionTypes.Main],
     usableAsTool: true,
     credentials: [
       {
-        name: 'deepOcrApi',
+        name: 'heeyOcrApi',
         required: true,
       },
     ],
@@ -347,7 +347,7 @@ export class DeepOcr implements INodeType {
         // Step 1: POST → 202 + Extraction { id, … }
         const submitResponse: unknown = await this.helpers.httpRequestWithAuthentication.call(
           this,
-          'deepOcrApi',
+          'heeyOcrApi',
           {
             method: 'POST',
             url: EXTRACTIONS_URL,
@@ -360,7 +360,7 @@ export class DeepOcr implements INodeType {
         if (!isPlainObject(submitResponse)) {
           throw new NodeApiError(
             this.getNode(),
-            { message: 'Unexpected response format from Deep-OCR API (expected 202 + Extraction)' },
+            { message: 'Unexpected response format from Heey OCR API (expected 202 + Extraction)' },
             { itemIndex },
           );
         }
@@ -369,7 +369,7 @@ export class DeepOcr implements INodeType {
         if (typeof jobId !== 'string' || jobId.length === 0) {
           throw new NodeApiError(
             this.getNode(),
-            { message: 'Deep-OCR API did not return an extraction id' },
+            { message: 'Heey OCR API did not return an extraction id' },
             { itemIndex },
           );
         }
@@ -388,7 +388,7 @@ export class DeepOcr implements INodeType {
         while (true) {
           const pollResponse: unknown = await this.helpers.httpRequestWithAuthentication.call(
             this,
-            'deepOcrApi',
+            'heeyOcrApi',
             {
               method: 'GET',
               url: extractionUrl(jobId),
@@ -408,7 +408,7 @@ export class DeepOcr implements INodeType {
             throw new NodeApiError(
               this.getNode(),
               {
-                message: `Deep-OCR poll response for extraction ${jobId} is missing the body/headers wrapper (expected returnFullResponse output)`,
+                message: `Heey OCR poll response for extraction ${jobId} is missing the body/headers wrapper (expected returnFullResponse output)`,
               },
               { itemIndex },
             );
@@ -433,7 +433,7 @@ export class DeepOcr implements INodeType {
             throw new NodeApiError(
               this.getNode(),
               {
-                message: `Deep-OCR extraction ${jobId} did not reach a terminal state within ${POLL_TIMEOUT_MS / 1000}s (last status: ${typeof status === 'string' ? status : 'unknown'})`,
+                message: `Heey OCR extraction ${jobId} did not reach a terminal state within ${POLL_TIMEOUT_MS / 1000}s (last status: ${typeof status === 'string' ? status : 'unknown'})`,
               },
               { itemIndex },
             );
@@ -458,7 +458,7 @@ export class DeepOcr implements INodeType {
           const message =
             typeof err.message === 'string' && err.message.length > 0
               ? err.message
-              : `Deep-OCR extraction ${jobId} failed`;
+              : `Heey OCR extraction ${jobId} failed`;
           throw new NodeApiError(
             this.getNode(),
             { message: `[${code}] ${message}` },
