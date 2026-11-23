@@ -204,8 +204,8 @@ The **Binary Property** field must match the property name set by the previous n
 
 ```bash
 # Clone the repository
-git clone https://github.com/Heey-Global/deep-ocr-n8n.git
-cd deep-ocr-n8n
+git clone https://github.com/Heey-Global/heey-ocr-n8n.git
+cd heey-ocr-n8n
 
 # Install dependencies
 pnpm install
@@ -241,9 +241,9 @@ MIT
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please submit pull requests to our [repository](https://github.com/Heey-Global/deep-ocr-n8n).
+Contributions are welcome! Please submit pull requests to our [repository](https://github.com/Heey-Global/heey-ocr-n8n).
 
 ## 📞 Support
 
-- [GitHub Issues](https://github.com/Heey-Global/deep-ocr-n8n/issues)
+- [GitHub Issues](https://github.com/Heey-Global/heey-ocr-n8n/issues)
 - [Heey OCR Documentation](https://heey-ocr.com)

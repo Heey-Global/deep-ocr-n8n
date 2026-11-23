@@ -12,14 +12,14 @@
     "structured-data"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/Heey-Global/deep-ocr-n8n",
+  "homepage": "https://github.com/Heey-Global/heey-ocr-n8n",
   "author": {
     "name": "Heey",
     "email": "hello@deep-ocr.com"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Heey-Global/deep-ocr-n8n.git"
+    "url": "git+https://github.com/Heey-Global/heey-ocr-n8n.git"
   },
   "engines": {
     "node": ">=22.0",
