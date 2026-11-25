@@ -60,7 +60,7 @@ describe('HeeyOcrApi Credentials', () => {
     });
 
     it('should use correct base URL', () => {
-      expect(credentials.test.request.baseURL).toBe('https://api.deep-ocr.com');
+      expect(credentials.test.request.baseURL).toBe('https://api.heey-ocr.com');
     });
   });
 });

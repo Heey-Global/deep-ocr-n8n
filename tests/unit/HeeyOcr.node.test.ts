@@ -246,7 +246,7 @@ describe('HeeyOcr Node', () => {
       const postCall = (mockExecuteFunctions.helpers.httpRequestWithAuthentication as jest.Mock).mock
         .calls[0][1];
       expect(postCall.method).toBe('POST');
-      expect(postCall.url).toBe('https://api.deep-ocr.com/v1/extractions');
+      expect(postCall.url).toBe('https://api.heey-ocr.com/v1/extractions');
       expect(postCall.qs).toBeUndefined();
       const form = postCall.body as FormData;
       expect(form).toBeInstanceOf(FormData);
@@ -259,7 +259,7 @@ describe('HeeyOcr Node', () => {
         'heeyOcrApi',
         expect.objectContaining({
           method: 'GET',
-          url: 'https://api.deep-ocr.com/v1/extractions/ext_receipt_1',
+          url: 'https://api.heey-ocr.com/v1/extractions/ext_receipt_1',
           returnFullResponse: true,
         }),
       );
@@ -880,7 +880,7 @@ describe('HeeyOcr Node', () => {
         'heeyOcrApi',
         expect.objectContaining({
           method: 'GET',
-          url: 'https://api.deep-ocr.com/v1/extractions/ext_2c6f0d8e_4ab1',
+          url: 'https://api.heey-ocr.com/v1/extractions/ext_2c6f0d8e_4ab1',
           returnFullResponse: true,
         }),
       );

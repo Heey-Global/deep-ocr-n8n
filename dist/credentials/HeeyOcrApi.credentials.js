@@ -35,7 +35,7 @@ class HeeyOcrApi {
     };
     test = {
         request: {
-            baseURL: 'https://api.deep-ocr.com',
+            baseURL: 'https://api.heey-ocr.com',
             url: '/health',
             method: 'GET',
         },

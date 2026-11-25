@@ -8,7 +8,7 @@ const errors_1 = require("../../utils/errors");
 // hardcoded version literal anywhere.
 const package_json_1 = require("../../../package.json");
 /** Heey OCR API base URL */
-const API_BASE = 'https://api.deep-ocr.com';
+const API_BASE = 'https://api.heey-ocr.com';
 /** POST a new extraction job */
 const EXTRACTIONS_URL = `${API_BASE}/v1/extractions`;
 /**
