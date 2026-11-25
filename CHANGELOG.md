@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.0.3](https://github.com/Heey-Global/heey-ocr-n8n/compare/v2.0.2...v2.0.3) (2026-11-25)
+
+
+### Bug Fixes
+
+* **deps:** update pnpm to v12.22.0 ([#261](https://github.com/Heey-Global/heey-ocr-n8n/issues/261)) ([f01c432](https://github.com/Heey-Global/heey-ocr-n8n/commit/f01c4321065e60e9c73a046a8807b5f38f6f5b78))
+* **n8n:** use the Heey OCR API hostname ([#263](https://github.com/Heey-Global/heey-ocr-n8n/issues/263)) ([c8764d3](https://github.com/Heey-Global/heey-ocr-n8n/commit/c8764d3829b4c16128eb5369cf6103372d47ddd0))
+
 ## [2.0.2](https://github.com/Heey-Global/heey-ocr-n8n/compare/v2.0.1...v2.0.2) (2026-11-23)
 
 
