@@ -91,6 +91,17 @@ describe('HeeyOcr Node', () => {
   });
 
   describe('node properties', () => {
+    it('should expose a single extract operation with an action label', () => {
+      const prop = node.description.properties.find((p) => p.name === 'operation');
+      expect(prop).toBeDefined();
+      expect(prop?.type).toBe('options');
+      expect(prop?.default).toBe('extract');
+      const options = prop?.options as Array<{ value: string; action?: string }>;
+      expect(options).toHaveLength(1);
+      expect(options[0].value).toBe('extract');
+      expect(options[0].action).toBe('Extract data from a document');
+    });
+
     it('should have binaryPropertyName parameter', () => {
       const prop = node.description.properties.find((p) => p.name === 'binaryPropertyName');
       expect(prop).toBeDefined();

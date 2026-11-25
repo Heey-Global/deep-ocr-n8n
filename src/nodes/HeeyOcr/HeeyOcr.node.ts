@@ -196,6 +196,21 @@ export class HeeyOcr implements INodeType {
     ],
     properties: [
       {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        options: [
+          {
+            name: 'Extract',
+            value: 'extract',
+            description: 'Extract structured data from a document',
+            action: 'Extract data from a document',
+          },
+        ],
+        default: 'extract',
+      },
+      {
         displayName: 'Binary Property',
         name: 'binaryPropertyName',
         type: 'string',

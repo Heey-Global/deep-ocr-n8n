@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-heey-ocr",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "description": "Heey OCR for n8n: AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use",
   "keywords": [
     "n8n-community-node-package",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
-    "@n8n/eslint-plugin-community-nodes": "^0.40.0",
+    "@n8n/eslint-plugin-community-nodes": "^0.41.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.0.0",
     "@typescript-eslint/eslint-plugin": "^8.57.0",
@@ -65,7 +65,7 @@
     "gulp": "^5.0.0",
     "jest": "^30.3.0",
     "jest-mock-extended": "^4.0.0",
-    "n8n-workflow": "~3.2.0",
+    "n8n-workflow": "~3.3.0",
     "prettier": "^3.8.0",
     "ts-jest": "^29.4.0",
     "typescript": "~6.0.3"
