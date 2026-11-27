@@ -196,7 +196,7 @@ importers:
         version: 3.3.7(supports-color@8.1.1)
       '@n8n/eslint-plugin-community-nodes':
         specifier: ^0.42.0
-        version: 0.42.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)
+        version: 0.42.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.4.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -228,8 +228,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.2(@jest/globals@30.5.2(supports-color@8.1.1))(jest@30.5.2(@types/node@26.6.6)(supports-color@8.1.1))(typescript@6.0.3)
       n8n-workflow:
-        specifier: ~3.3.0
-        version: 3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
+        specifier: ~3.4.0
+        version: 3.4.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
       prettier:
         specifier: ^3.8.0
         version: 3.10.1
@@ -670,8 +670,8 @@ packages:
   '@n8n/constants@0.46.0':
     resolution: {integrity: sha512-XlrL02jQib/ZkGLFuefNABtgUAKAbnYA2J92Am/vkluXz5EC5aNiMKbUXRU9OBAAXL2XWgom6H+mpcfURn83Ow==}
 
-  '@n8n/constants@1.3.0':
-    resolution: {integrity: sha512-7psvyK63CzfLFQyoW3Fy92lHtJCzH4wq3JKJk2qY6mZW5B5607G8StF0L9llcPyenWirwUUscNarX/6ae1HMSw==}
+  '@n8n/constants@1.3.1':
+    resolution: {integrity: sha512-yQRpRifshMK2cLlxh5XNWqZ7VI0DzIQOJZk1V1nC+aCr0ye3zgqNGXUPDHfLpHixLsms7hKTnoRkD1jH0diwYg==}
 
   '@n8n/errors@1.3.0':
     resolution: {integrity: sha512-CVLVTiRw+GDMHkf5ut6w/srX9g1/9W6R6QP8zW9zW0ptvY7RqEBIrJmxgYzTkFlfJWauye6PWhJmHtORfCgP1g==}
@@ -682,17 +682,17 @@ packages:
       eslint: 9.29.0
       n8n-workflow: ^2.36.0
 
-  '@n8n/expression-runtime@1.3.0':
-    resolution: {integrity: sha512-o+izqvg2NWoUr+p20e/6094J9FmH/CRoq4hqC2tEYbiYNoQu4NuznJK7LTcs8d8z2tDdpsw56PhfaRYkAoGyWg==}
+  '@n8n/expression-runtime@1.4.1':
+    resolution: {integrity: sha512-IxsUQIzEt4qoYwJHp1yzYyKAZul1B7C2zY9zXsQiutKo/nduwRMRAnfUhTjRfgJG2b9LoFV1XrYSCDGQv8xJUw==}
 
-  '@n8n/tournament@2.3.0':
-    resolution: {integrity: sha512-5yn2MUNWybK0T9Xsx848ntdj/RoHO19/XrrBkJG0dfSO441h4EIzjdIJIWS9cZguJbLorxHhewZM45XbDBaXYQ==}
+  '@n8n/tournament@2.4.0':
+    resolution: {integrity: sha512-gzTTz1tPDXjZjAyqhLeSNdCRfL0qAJw2Nu8kQOTP+rL5mBETyXBRHq7a+PYrTsDdeBgPHQ1WjXoIlUKPLGHkxQ==}
 
   '@n8n/utils@1.57.0':
     resolution: {integrity: sha512-GwJ1pjQHxzfOBzQUiPesQsjSUD8JemKT7JKkp657s8WPqpcy5gIwpJtQZxkuk1XIkvc99+zYL0ohqsgn8k34VQ==}
 
-  '@n8n/utils@2.3.0':
-    resolution: {integrity: sha512-QKqjwqqmAxtEBmDqL3iwLypqp2fhtQ+c/cxPVSUtRbAq82M10fbC90i2ZiNGrjGymHj4XusrmpSQgkTdb7jzWA==}
+  '@n8n/utils@2.4.1':
+    resolution: {integrity: sha512-l168ZoYc6iQGEECjfQ9AWm07/eeDpor/15eDfl1R5Cm9b3etw/5HYvwMU2syPnOOBxaWT8d2hvom93b/vodvqQ==}
 
   '@napi-rs/wasm-runtime@1.2.4':
     resolution: {integrity: sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g==}
@@ -2367,8 +2367,8 @@ packages:
     resolution: {integrity: sha512-32GSKM3Wyc8dg/p39lWPKYu8zci9mJFzV1Np9Of0ZEpe6Fhssn/FbI7ywAMd40uX+p3ZKh3T5EeCFv81qS3HmQ==}
     engines: {node: '>= 10.13.0'}
 
-  n8n-workflow@3.3.0:
-    resolution: {integrity: sha512-4PVjTlbxismoWIvUUWT6dqICFimyemQyfU8us+vFLSk3BwUXGJR2xza0oua5V/JpoUed4Q+pmg5q6yOYnq4r3Q==}
+  n8n-workflow@3.4.1:
+    resolution: {integrity: sha512-zpE7GiB28bkTzyk0aemXpUkXpUuAP0Gyd+8FGsjz9vQ6KUiO0IIcvogf0hyficEIHHWJKREslY0BcY3iVzWk8A==}
     peerDependencies:
       zod: 3.25.76
 
@@ -3633,13 +3633,13 @@ snapshots:
 
   '@n8n/constants@0.46.0': {}
 
-  '@n8n/constants@1.3.0': {}
+  '@n8n/constants@1.3.1': {}
 
   '@n8n/errors@1.3.0':
     dependencies:
       callsites: 3.1.0
 
-  '@n8n/eslint-plugin-community-nodes@0.42.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)':
+  '@n8n/eslint-plugin-community-nodes@0.42.0(eslint@10.15.0(supports-color@8.1.1))(n8n-workflow@3.4.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76))(supports-color@8.1.1)(typescript@6.0.3)':
     dependencies:
       '@n8n/utils': 1.57.0
       '@typescript-eslint/typescript-estree': 8.70.0(supports-color@8.1.1)(typescript@6.0.3)
@@ -3650,7 +3650,7 @@ snapshots:
       domhandler: 5.0.3
       eslint: 10.15.0(supports-color@8.1.1)
       fastest-levenshtein: 1.0.16
-      n8n-workflow: 3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
+      n8n-workflow: 3.4.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76)
       pluralize: 8.0.0
       postcss: 8.5.33
       saxes: 6.0.0
@@ -3658,12 +3658,12 @@ snapshots:
       - supports-color
       - typescript
 
-  '@n8n/expression-runtime@1.3.0':
+  '@n8n/expression-runtime@1.4.1':
     dependencies:
       '@jitl/quickjs-wasmfile-release-sync': 0.32.0
       '@n8n/errors': 1.3.0
-      '@n8n/tournament': 2.3.0
-      '@n8n/utils': 2.3.0
+      '@n8n/tournament': 2.4.0
+      '@n8n/utils': 2.4.1
       isolated-vm: 7.0.2
       jmespath: 0.16.0
       js-base64: 3.7.8
@@ -3676,7 +3676,7 @@ snapshots:
       transliteration: 2.3.5
       zod: 3.25.76
 
-  '@n8n/tournament@2.3.0':
+  '@n8n/tournament@2.4.0':
     dependencies:
       ast-types: 0.16.1
       esprima-next: 5.8.4
@@ -3689,9 +3689,9 @@ snapshots:
       nanoid: 6.0.2
       semver: 7.7.3
 
-  '@n8n/utils@2.3.0':
+  '@n8n/utils@2.4.1':
     dependencies:
-      '@n8n/constants': 1.3.0
+      '@n8n/constants': 1.3.1
       jssha: 3.3.1
       nanoid: 6.0.2
       semver: 7.7.3
@@ -5604,14 +5604,14 @@ snapshots:
 
   mute-stdout@2.0.0: {}
 
-  n8n-workflow@3.3.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76):
+  n8n-workflow@3.4.1(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)(zod@3.25.76):
     dependencies:
       '@codemirror/autocomplete': 6.20.0
-      '@n8n/constants': 1.3.0
+      '@n8n/constants': 1.3.1
       '@n8n/errors': 1.3.0
-      '@n8n/expression-runtime': 1.3.0
-      '@n8n/tournament': 2.3.0
-      '@n8n/utils': 2.3.0
+      '@n8n/expression-runtime': 1.4.1
+      '@n8n/tournament': 2.4.0
+      '@n8n/utils': 2.4.1
       ast-types: 0.16.1
       axios: 1.21.0(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       esprima-next: 5.8.4
