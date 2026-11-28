@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.4](https://github.com/Heey-Global/heey-ocr-n8n/compare/v2.0.3...v2.0.4) (2026-11-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @n8n/eslint-plugin-community-nodes to ^0.42.0 ([#268](https://github.com/Heey-Global/heey-ocr-n8n/issues/268)) ([2493707](https://github.com/Heey-Global/heey-ocr-n8n/commit/249370701385dcae48233fb4e70930dfc07d9abc))
+* **deps:** update dependency @types/node to v26.6.10 ([#271](https://github.com/Heey-Global/heey-ocr-n8n/issues/271)) ([75b6ef6](https://github.com/Heey-Global/heey-ocr-n8n/commit/75b6ef651cb996b28bcb85045819d2aa094e7633))
+* **deps:** update dependency @types/node to v26.6.7 ([#270](https://github.com/Heey-Global/heey-ocr-n8n/issues/270)) ([db63750](https://github.com/Heey-Global/heey-ocr-n8n/commit/db63750c70caf4926aa63d33df16ba9512273c9a))
+* **deps:** update eslint to v8.74.0 ([#266](https://github.com/Heey-Global/heey-ocr-n8n/issues/266)) ([d506256](https://github.com/Heey-Global/heey-ocr-n8n/commit/d506256c5dcc38084713eba7b5d94609ccb7e81f))
+
 ## [2.0.3](https://github.com/Heey-Global/heey-ocr-n8n/compare/v2.0.2...v2.0.3) (2026-11-25)
 
 
