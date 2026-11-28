@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-heey-ocr",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "Heey OCR for n8n: AI-powered OCR for invoices, receipts, contracts, IDs, bank statements and more — returns structured JSON ready to use",
   "keywords": [
     "n8n-community-node-package",
